@@ -17,6 +17,12 @@ inputs:
       Should the R package repository be uploaded as an artifact?
     default: true
     required: true
+  strip:
+    description: |
+      An R expression that should evaluate to an atomic vector of directories to
+      strip from packages when building the R package library image.
+    default: "NULL"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -28,7 +34,7 @@ runs:
     - name: Build Wasm R packages
       run: |
         /usr/bin/R --silent -e 'rwasm::add_list("${{ inputs.packages }}")'
-        /usr/bin/R --silent -e 'rwasm::make_vfs_library()'
+        /usr/bin/R --silent -e 'rwasm::make_vfs_library(strip = ${{ inputs.strip }})'
       shell: bash
     - name: Upload R package repository
       if: ${{ inputs.upload-repo == 'true' }}
