@@ -14,6 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build wasm packages
-      uses: r-wasm/actions/build-wasm-packages@v1
+      uses: ./build-wasm-packages
       with:
         packages: .github/workflows/packages
