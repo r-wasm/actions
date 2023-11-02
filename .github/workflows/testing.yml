@@ -5,7 +5,7 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
-name: Basic run test for r-wasm actions
+name: r-wasm actions
 
 jobs:
   build:
