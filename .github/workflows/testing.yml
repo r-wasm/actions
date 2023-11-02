@@ -1,0 +1,19 @@
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+name: Basic run test for r-wasm actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/r-wasm/webr:main
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build wasm packages
+      uses: r-wasm/actions/build-wasm-packages@v1
+      with:
+        packages: .github/workflows/packages
