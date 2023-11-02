@@ -39,8 +39,6 @@ jobs:
         with:
           name: wasm-image
           path: _site
-      - run: ls
-      - run: ls _site
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
       - name: Deploy to GitHub Pages
