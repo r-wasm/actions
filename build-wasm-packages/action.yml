@@ -19,8 +19,8 @@ inputs:
     required: true
   strip:
     description: |
-      An R expression that should evaluate to an atomic vector of directories to
-      strip from packages when building the R package library image.
+      An R expression evaluating to a character vector of directories to strip
+      when building the R package library image.
     default: "NULL"
     required: true
 runs:
