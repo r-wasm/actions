@@ -2,7 +2,7 @@
 
 This action can be used to build a list of R packages for WebAssembly, create an R package library, and build a CRAN-like repository containing the R package binaries.
 
-This action uses the [rwasm](https://r-wasm.github.io/webr-repo/) R package to build packages for WebAssembly, which must be run in an environment with access to a Wasm development toolchain. The simplest way to ensure the availability of such a toolchain is to run the action in the development Docker container provided by webR: `ghcr.io/r-wasm/webr:main`. See the Usage section below for an example of this kind of set-up.
+This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build packages for WebAssembly, which must be run in an environment with access to a Wasm development toolchain. The simplest way to ensure the availability of such a toolchain is to run the action in the development Docker container provided by webR: `ghcr.io/r-wasm/webr:main`. See the Usage section below for an example of this kind of set-up.
 
 ## Inputs
 

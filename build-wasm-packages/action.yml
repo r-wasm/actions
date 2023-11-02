@@ -29,7 +29,7 @@ runs:
     - name: Install the pak and rwasm R packages
       run: |
         /usr/bin/R --silent -e 'install.packages("pak")'
-        /usr/bin/R --silent -e 'pak::pak("r-wasm/webr-repo@pkg")'
+        /usr/bin/R --silent -e 'pak::pak("r-wasm/rwasm")'
       shell: bash
     - name: Build Wasm R packages
       run: |

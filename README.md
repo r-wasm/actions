@@ -1,5 +1,5 @@
 # GitHub Actions for working with R and WebAssembly
-![r-wasm actions](https://github.com/georgestagg/actions/actions/workflows/testing.yml/badge.svg)
+![r-wasm actions](https://github.com/r-wasm/actions/actions/workflows/testing.yml/badge.svg)
 
 This repository stores GitHub Actions associated with R WebAssembly tasks, which can be used in CI. It also has a number of example workflows which use these actions.
 
