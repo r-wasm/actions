@@ -1,0 +1,27 @@
+name: Download wasm R package repository artifact
+description: |
+  Downloads a (previously) built CRAN-like repository containing the R package binaries and/or R package library filesystem image.
+inputs:
+  repo-path:
+    description: Path to download the R package repository artifact to.
+    default: ""
+    required: false
+  image-path:
+    description: Path to download the R package library filesystem image artifact to.
+    default: ""
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Download wasm R package repository artifact
+      if: ${{ inputs.repo-path != "" }}
+      uses: actions/download-artifact@v3
+      with:
+        name: wasm-image
+        path: ${{ inputs.repo-path }}
+    - name: Download wasm R package library filesystem image artifact
+      if: ${{ inputs.image-path != "" }}
+      uses: actions/download-artifact@v3
+      with:
+        name: wasm-repo
+        path: ${{ inputs.image-path }}
