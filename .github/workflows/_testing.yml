@@ -8,16 +8,21 @@ on:
 name: r-wasm actions
 
 jobs:
+  build-workflow:
+    # Uses `build-wasm-packages@v1` internally
+    uses: ./.github/workflows/build.yml
+    with:
+      packages: .github/_testing/packages
   build:
     name: Build wasm artifacts
     runs-on: ubuntu-latest
     container: ghcr.io/r-wasm/webr:main
     steps:
-    - uses: actions/checkout@v3
-    - name: Build wasm packages
-      uses: ./build-wasm-packages
-      with:
-        packages: .github/workflows/packages
+      - uses: actions/checkout@v3
+      - name: Build wasm packages
+        uses: ./build-wasm-packages
+        with:
+          packages: .github/_testing/packages
   download:
     name: Download wasm artifacts
     needs: build
