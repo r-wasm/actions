@@ -14,13 +14,13 @@ runs:
   using: "composite"
   steps:
     - name: Download wasm R package repository artifact
-      if: ${{ inputs.repo-path != "" }}
+      if: ${{ inputs.repo-path != '' }}
       uses: actions/download-artifact@v3
       with:
         name: wasm-image
         path: ${{ inputs.repo-path }}
     - name: Download wasm R package library filesystem image artifact
-      if: ${{ inputs.image-path != "" }}
+      if: ${{ inputs.image-path != '' }}
       uses: actions/download-artifact@v3
       with:
         name: wasm-repo
