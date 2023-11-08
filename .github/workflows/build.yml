@@ -1,0 +1,50 @@
+on:
+  # Allow users to run this workflow via reusable workflow
+  # Avoids boiler plate of setting the container and running the single steps
+  # Ex:
+  # jobs:
+  #   build:
+  #     uses: r-wasm/actions/.github/workflows/build.yml@v1
+  workflow_call:
+    inputs:
+      # !! Same as ./build-wasm-packages/action.yml inputs!!
+      packages:
+        description: A file containing a list of R package references.
+        default: packages
+        type: string
+        required: true
+      upload-image:
+        description: |
+          Should the R package library filesystem image be uploaded as an artifact?
+        default: true
+        type: boolean
+        required: true
+      upload-repo:
+        description: |
+          Should the R package repository be uploaded as an artifact?
+          default: true
+        type: boolean
+        required: true
+      strip:
+        description: |
+          An R expression evaluating to a character vector of directories to strip
+          when building the R package library image.
+        default: "NULL"
+        type: string
+        required: true
+
+name: Build wasm R package repository
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/r-wasm/webr:main
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build wasm packages
+        uses: r-wasm/actions/build-wasm-packages@v1
+        with:
+          packages: ${{ inputs.packages }}
+          upload-image: ${{ inputs.upload-image }}
+          upload-repo: ${{ inputs.upload-repo }}
+          strip: ${{ inputs.strip }}
