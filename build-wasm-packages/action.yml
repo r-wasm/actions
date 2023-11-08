@@ -6,23 +6,23 @@ inputs:
   packages:
     description: A file containing a list of R package references.
     default: packages
-    required: true
+    required: false
   upload-image:
     description: |
       Should the R package library filesystem image be uploaded as an artifact?
     default: true
-    required: true
+    required: false
   upload-repo:
     description: |
       Should the R package repository be uploaded as an artifact?
     default: true
-    required: true
+    required: false
   strip:
     description: |
       An R expression evaluating to a character vector of directories to strip
       when building the R package library image.
     default: "NULL"
-    required: true
+    required: false
 runs:
   using: "composite"
   steps:
