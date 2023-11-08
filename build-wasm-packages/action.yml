@@ -27,15 +27,15 @@ runs:
   using: "composite"
   steps:
     - name: Install the pak and rwasm R packages
+      shell: Rscript {0}
       run: |
-        /usr/bin/R --silent -e 'install.packages("pak")'
-        /usr/bin/R --silent -e 'pak::pak("r-wasm/rwasm")'
-      shell: bash
+        if (!require("pak", character.only = TRUE)) install.packages("pak")
+        pak::pak("r-wasm/rwasm")
     - name: Build Wasm R packages
+      shell: Rscript {0}
       run: |
-        /usr/bin/R --silent -e 'rwasm::add_list("${{ inputs.packages }}")'
-        /usr/bin/R --silent -e 'rwasm::make_vfs_library(strip = ${{ inputs.strip }})'
-      shell: bash
+        rwasm::add_list("${{ inputs.packages }}")
+        rwasm::make_vfs_library(strip = ${{ inputs.strip }})
     - name: Upload R package repository
       if: ${{ inputs.upload-repo == 'true' }}
       uses: actions/upload-artifact@v3
