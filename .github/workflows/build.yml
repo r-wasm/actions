@@ -7,7 +7,13 @@ on:
   #     uses: r-wasm/actions/.github/workflows/build.yml@v1
   workflow_call:
     inputs:
-      # !! Same as ./build-wasm-packages/action.yml inputs!!
+      # New input parameters
+      name:
+        description: The name of the job
+        default: "Build wasm packages"
+        type: string
+        required: false
+      # !! ./build-wasm-packages/action.yml inputs!!
       packages:
         description: A file containing a list of R package references.
         default: packages
@@ -38,6 +44,8 @@ name: Build wasm R package repository
 jobs:
   # Build and upload the wasm packages
   build:
+    # Should match the name of `./build-wasm-packages` action name
+    name: ${{ inputs.name }}
     # Run the Docker container on the latest ubuntu
     runs-on: ubuntu-latest
     container: ghcr.io/r-wasm/webr:main

@@ -6,11 +6,19 @@ Workflows whose name starts with an `_` are intended for internal use only, and 
 
 ## List of workflows
 
-#### [`r-wasm/actions/.github/workflows/build.yml`](https://github.com/r-wasm/actions/tree/v1/.github/workflows/build.yml)
+### [`r-wasm/actions/.github/workflows/build.yml`](https://github.com/r-wasm/actions/tree/v1/.github/workflows/build.yml)
 
 Reusable workflow to conveniently checkout the repo, and build/upload the package via [`r-wasm/actions/build-wasm-packages`](https://github.com/r-wasm/actions/tree/v1/build-wasm-packages).
 
-##### Usage
+#### Inputs
+
+* **packages** (`'packages'`) - A file path to a text file containing a list of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
+* **upload-image** (`true`) - Should the R package library filesystem image be uploaded as an artifact?
+* **upload-repo** (`true`) - Should the R package repository be uploaded as an artifact?
+* **strip** (`NULL`) - An R expression evaluating to a character vector of directories to strip when building the R package library image. Only the R package library is affected, the R package repository remains unchanged.
+* **name** (`'Build wasm packages'`) - The name of the job.
+
+#### Usage
 
 ```yaml
 on:
