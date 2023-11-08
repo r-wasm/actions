@@ -15,6 +15,8 @@ We use major version tags to mark breaking changes in these actions. For the cur
 
 * [r-wasm/actions/build-wasm-packages](https://github.com/r-wasm/actions/tree/v1/build-wasm-packages) - Build a list of R packages for WebAssembly, create an R library, and build a CRAN-like repository containing the R package binaries.
 
+* [r-wasm/actions/download-wasm-artifacts](https://github.com/r-wasm/actions/tree/v1/download-wasm-artifacts) - Download GitHub Actions artifacts previously uploaded by `r-wasm/actions/build-wasm-packages`.
+
 ## Other GitHub Actions for R projects
 
 * [r-lib/actions](https://github.com/r-lib/actions) - GitHub Actions for the R community

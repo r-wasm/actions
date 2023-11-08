@@ -1,12 +1,15 @@
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  workflow_dispatch:
+# download-wasm-artifacts
 
-name: Build wasm R package repository
+This action can be used to download previously built GitHub Action artifacts consisting of a wasm friendly R package library and/or a CRAN-like repository containing the R package binaries.
 
+## Inputs
+
+* **repo-path** (`''`) - Path to download the R package repository artifact to.
+* **image-path** (`''`) - Path to download the R package library filesystem image artifact to.
+
+## Usage
+
+```yaml
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +19,8 @@ jobs:
     - name: Build wasm packages
       uses: r-wasm/actions/build-wasm-packages@v1
       with:
-        strip: c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")
+        upload-image: true
+        upload-repo: false
   deploy:
     name: Deploy to GitHub pages
     needs: build
@@ -37,5 +41,5 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v2
+```
