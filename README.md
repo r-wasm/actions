@@ -7,15 +7,19 @@ This repository stores GitHub Actions associated with R WebAssembly tasks, which
 
 We use major version tags to mark breaking changes in these actions. For the current version, please use the `v1` tag, e.g.:
 
-```
+```yaml
 - uses: r-wasm/actions/build-wasm-packages@v1
 ```
 
 ## List of actions
 
-* [r-wasm/actions/build-wasm-packages](https://github.com/r-wasm/actions/tree/v1/build-wasm-packages) - Build a list of R packages for WebAssembly, create an R library, and build a CRAN-like repository containing the R package binaries.
+* [`r-wasm/actions/build-wasm-packages`](https://github.com/r-wasm/actions/tree/v1/build-wasm-packages) - Build a list of R packages for WebAssembly, create an R library, and build a CRAN-like repository containing the R package binaries.
 
-* [r-wasm/actions/download-wasm-artifacts](https://github.com/r-wasm/actions/tree/v1/download-wasm-artifacts) - Download GitHub Actions artifacts previously uploaded by `r-wasm/actions/build-wasm-packages`.
+* [`r-wasm/actions/download-wasm-artifacts`](https://github.com/r-wasm/actions/tree/v1/download-wasm-artifacts) - Download GitHub Actions artifacts previously uploaded by `r-wasm/actions/build-wasm-packages`.
+
+## List of workflows
+
+* [`r-wasm/actions/.github/workflows/build.yml`](https://github.com/r-wasm/actions/tree/v1/.github/workflows/build.yml) - [Reusable workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows) to conveniently checkout the repo, and build/upload the package via [`r-wasm/actions/build-wasm-packages`](https://github.com/r-wasm/actions/tree/v1/build-wasm-packages).
 
 ## Other GitHub Actions for R projects
 
@@ -24,4 +28,4 @@ We use major version tags to mark breaking changes in these actions. For the cur
 
 ## Examples
 
-See the [r-wasm/actions/examples](https://github.com/r-wasm/actions/tree/v1/examples) directory for example workflows using these actions.
+See the [r-wasm/actions/examples](https://github.com/r-wasm/actions/tree/v1/examples) directory for example workflows using these actions and workflows.

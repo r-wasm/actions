@@ -36,7 +36,9 @@ on:
 name: Build wasm R package repository
 
 jobs:
+  # Build and upload the wasm packages
   build:
+    # Run the Docker container on the latest ubuntu
     runs-on: ubuntu-latest
     container: ghcr.io/r-wasm/webr:main
     steps:

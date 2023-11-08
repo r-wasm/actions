@@ -13,6 +13,20 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 
 ## Usage
 
+Given the amount of boilerplate and the non-traditional use of `container` required for the workflow, it is recommended to use the reusable [build.yml](.github/workflows/build.yml) workflow file provided by this repository.
+
+```yaml
+jobs:
+  build:
+    uses: r-wasm/actions/.github/workflows/build.yml@v1
+    with:
+      upload-image: true
+      upload-repo: false
+      strip: c("demo", "doc", "examples", "help")
+```
+
+The workflow example above is equivalent to the following:
+
 ```yaml
 jobs:
   build:
@@ -27,4 +41,3 @@ jobs:
         upload-repo: false
         strip: c("demo", "doc", "examples", "help")
 ```
-

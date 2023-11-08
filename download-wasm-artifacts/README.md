@@ -12,15 +12,10 @@ This action can be used to download previously built GitHub Action artifacts con
 ```yaml
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: ghcr.io/r-wasm/webr:main
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build wasm packages
-      uses: r-wasm/actions/build-wasm-packages@v1
-      with:
-        upload-image: true
-        upload-repo: false
+    uses: r-wasm/actions/.github/workflows/build.yml@v1
+    with:
+      upload-image: true
+      upload-repo: false
   deploy:
     name: Deploy to GitHub pages
     needs: build

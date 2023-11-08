@@ -9,9 +9,4 @@ name: Build wasm R package repository
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: ghcr.io/r-wasm/webr:main
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build wasm packages
-      uses: r-wasm/actions/build-wasm-packages@v1
+    uses: r-wasm/actions/.github/workflows/build.yml@v1
