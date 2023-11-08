@@ -1,11 +1,11 @@
 # download-wasm-artifacts
 
-This action can be used to download previously built GitHub Action artifacts containing wasm friendly R package library and/or a CRAN-like repository containing the R package binaries.
+This action can be used to download previously built GitHub Action artifacts consisting of a wasm friendly R package library and/or a CRAN-like repository containing the R package binaries.
 
 ## Inputs
 
 * **repo-path** (`''`) - Path to download the R package repository artifact to.
-* **iamge-path** (`''`) - Path to download the R package library filesystem image artifact to.
+* **image-path** (`''`) - Path to download the R package library filesystem image artifact to.
 
 ## Usage
 
