@@ -9,6 +9,7 @@ name: r-wasm actions
 
 jobs:
   build:
+    name: Build wasm artifacts
     runs-on: ubuntu-latest
     container: ghcr.io/r-wasm/webr:main
     steps:
@@ -17,3 +18,14 @@ jobs:
       uses: ./build-wasm-packages
       with:
         packages: .github/workflows/packages
+  download:
+    name: Download wasm artifacts
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download wasm artifacts
+        uses: ./download-wasm-artifacts
+        with:
+          repo-path: _site
+          image-path: _site
