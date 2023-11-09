@@ -40,6 +40,6 @@ To setup this file in your repository, run the following command:
 ```r
 usethis::use_github_action(
   url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/build-wasm-repo.yml",
-  save_as = "build2.yml"
+  save_as = "build.yml"
 )
 ```
