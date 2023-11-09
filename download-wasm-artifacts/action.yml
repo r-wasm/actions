@@ -17,11 +17,11 @@ runs:
       if: ${{ inputs.repo-path != '' }}
       uses: actions/download-artifact@v3
       with:
-        name: wasm-image
+        name: wasm-repo
         path: ${{ inputs.repo-path }}
     - name: Download wasm R package library filesystem image artifact
       if: ${{ inputs.image-path != '' }}
       uses: actions/download-artifact@v3
       with:
-        name: wasm-repo
+        name: wasm-image
         path: ${{ inputs.image-path }}
