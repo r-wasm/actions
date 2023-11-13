@@ -18,6 +18,7 @@ jobs:
       id-token: write
       repository-projects: read
       actions: read
+      packages: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
