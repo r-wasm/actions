@@ -28,7 +28,7 @@ jobs:
         run: ls -Rlth .
 
       - name: Build wasm packages
-        uses: ./.github/build-rwasm
+        uses: ./.github/actions/build-rwasm
         id: rwasm
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
