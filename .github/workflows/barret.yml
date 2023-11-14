@@ -63,6 +63,7 @@ jobs:
           mkdir -p _site
           mv vfs/library.data _site/library.data
           mv vfs/library.js.metadata _site/library.js.metadata
+          mv repo _site/repo
 
       - name: Show dir contents
         run: ls -Rlth .
