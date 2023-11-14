@@ -1,5 +1,6 @@
 args <- commandArgs(trailingOnly = TRUE)
 cat("\nargs:\n")
+Sys.setenv(GITHUB_PAT = args[3])
 str(args)
 
 if (length(args) == 0) {
@@ -46,3 +47,7 @@ file.copy("repo", repo_dir, recursive = TRUE, overwrite = TRUE)
 file.copy("vfs", out_dir, recursive = TRUE, overwrite = TRUE)
 
 dir(base_dir, recursive = TRUE, all.files = TRUE)
+
+# Set outputs
+cat("vfs_dir=", out_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+cat("repo_dir=", repo_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)

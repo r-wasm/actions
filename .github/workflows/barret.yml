@@ -1,7 +1,7 @@
 on:
   push:
 
-name: Barret
+name: Build and Deploy repository
 
 jobs:
   # Build and upload the wasm packages
@@ -9,51 +9,31 @@ jobs:
     # Should match the name of `./build-wasm-packages` action name
     name: "Build repository"
     runs-on: ubuntu-latest
-    container: ghcr.io/r-wasm/webr:main
+    # Only run latest version of website
     concurrency:
       group: ${{ github.workflow }}
       cancel-in-progress: true
     permissions:
-      write-all
-      # pages: write
-      # id-token: write
-      # repository-projects: read
-      # actions: read
-      # packages: read
+      # write-all
+      pages: write
+      id-token: write
+      repository-projects: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v3
-      # - name: Save R script
-      #   uses: DamianReeves/write-file-action@master
-      #   with:
-      #     path: .r-wasm.R
-      #     write-mode: overwrite
-      #     contents: |
-      #       if (!require("pak", character.only = TRUE)) install.packages("pak")
-      #       pak::pak("r-wasm/rwasm")
-      #       rwasm::add_list("cli")
-      #       rwasm::make_vfs_library(strip = NULL)
 
-      # Run the Docker container on the latest ubuntu
-      # - name: Build wasm packages
-      #   uses: docker://gcr.io/r-wasm/webr:main
-      #   with:
-      #     args: Rscript .r-wasm.R
       - name: Show dir contents
         run: ls -Rlth .
 
       - name: Build wasm packages
-        uses: ./.github/barret
+        uses: ./.github/build-rwasm
+        id: rwasm
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         with:
           packages: cli
-          # packages: |
-          #   cli
-          #   shiny, rlang
-          # strip: "NULL"
 
       - name: Show dir contents
         run: ls -Rlth .
@@ -63,7 +43,7 @@ jobs:
           mkdir -p _site
           mv vfs/library.data _site/library.data
           mv vfs/library.js.metadata _site/library.js.metadata
-          mv repo _site/repo
+          mv repo/* _site/
 
       - name: Show dir contents
         run: ls -Rlth .

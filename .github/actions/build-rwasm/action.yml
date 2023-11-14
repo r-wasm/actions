@@ -11,7 +11,11 @@ inputs:
       when building the R package library image.
     default: "NULL"
     required: false
-
+outputs:
+  vfs_dir:
+    description: 'Directory of the R package library filesystem image'
+  repo_dir:
+    description: 'Directory of the R package repository'
 # outputs:
 #   time: # id of output
 #     description: 'The time we greeted you'
