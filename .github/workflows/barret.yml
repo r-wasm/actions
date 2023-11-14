@@ -14,11 +14,12 @@ jobs:
       group: ${{ github.workflow }}
       cancel-in-progress: true
     permissions:
-      pages: write
-      id-token: write
-      repository-projects: read
-      actions: read
-      packages: read
+      write-all
+      # pages: write
+      # id-token: write
+      # repository-projects: read
+      # actions: read
+      # packages: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
