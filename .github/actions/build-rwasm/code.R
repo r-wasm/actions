@@ -11,9 +11,13 @@ if (length(args) == 0) {
 
 # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action#accessing-files-created-by-a-container-action
 # > When a container action runs, it will automatically map the default working directory (GITHUB_WORKSPACE) on the runner with the /github/workspace directory on the container. Any files added to this directory on the container will be available to any subsequent steps in the same job.
-base_dir <- "/github/workspace/_rwasm"
-out_dir <- file.path(base_dir, "vfs")
-repo_dir <- file.path(base_dir, "repo")
+base_dir <- "/github/workspace"
+# Used for outputs
+out_dir_path <- "_rwasm/vfs"
+repo_dir_path <- "_rwasm/repo"
+# Make local paths that are mapped to the container
+out_dir <- file.path(base_dir, out_dir_path)
+repo_dir <- file.path(base_dir, repo_dir_path)
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 if (!dir.exists(repo_dir)) dir.create(repo_dir, recursive = TRUE)
 
@@ -48,5 +52,5 @@ file.copy("vfs", out_dir, recursive = TRUE, overwrite = TRUE)
 dir(base_dir, recursive = TRUE, all.files = TRUE)
 
 # Set outputs
-cat("vfs-dir=", out_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
-cat("repo-dir=", repo_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+cat("vfs-dir=", out_dir_path, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+cat("repo-dir=", repo_dir_path, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
