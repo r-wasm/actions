@@ -1,6 +1,5 @@
 args <- commandArgs(trailingOnly = TRUE)
 cat("\nargs:\n")
-Sys.setenv(GITHUB_PAT = args[3])
 str(args)
 
 if (length(args) == 0) {
