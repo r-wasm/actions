@@ -47,10 +47,11 @@ jobs:
       - name: Build wasm packages
         uses: ./.github/barret
         with:
-          packages: |
-            cli
-            shiny, rlang
-          strip: "NULL"
+          packages: cli
+          # packages: |
+          #   cli
+          #   shiny, rlang
+          # strip: "NULL"
 
       - name: Show dir contents
         run: ls -Rlth .

@@ -3,9 +3,8 @@ name: 'Build wasm packages action'
 description: 'Build wasm packages using r-wasm/rwasm'
 inputs:
   packages:
-    description: A file containing a list of R package references.
-    default: packages
-    required: false
+    description: A set of R package values
+    required: true
   strip:
     description: |
       An R expression evaluating to a character vector of directories to strip
