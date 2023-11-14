@@ -38,7 +38,7 @@ jobs:
 
       # Run the Docker container on the latest ubuntu
       - name: Build wasm packages
-        uses: docker://gcr.io/r-wasm/webr:main
+        uses: gcr.io/r-wasm/webr:main
         with:
           args: Rscript .r-wasm.R
 
