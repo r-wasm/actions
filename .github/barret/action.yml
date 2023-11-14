@@ -22,7 +22,7 @@ runs:
   # env:
   #   GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
   args:
-    - Rscript
+    # - Rscript
     - /code.R
     - ${{ inputs.packages }}
     - ${{ inputs.strip }}
