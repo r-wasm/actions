@@ -25,25 +25,35 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v3
-      - name: Save R script
-        uses: DamianReeves/write-file-action@master
-        with:
-          path: .r-wasm.R
-          write-mode: overwrite
-          contents: |
-            if (!require("pak", character.only = TRUE)) install.packages("pak")
-            pak::pak("r-wasm/rwasm")
-            rwasm::add_list("cli")
-            rwasm::make_vfs_library(strip = NULL)
+      # - name: Save R script
+      #   uses: DamianReeves/write-file-action@master
+      #   with:
+      #     path: .r-wasm.R
+      #     write-mode: overwrite
+      #     contents: |
+      #       if (!require("pak", character.only = TRUE)) install.packages("pak")
+      #       pak::pak("r-wasm/rwasm")
+      #       rwasm::add_list("cli")
+      #       rwasm::make_vfs_library(strip = NULL)
 
       # Run the Docker container on the latest ubuntu
+      # - name: Build wasm packages
+      #   uses: docker://gcr.io/r-wasm/webr:main
+      #   with:
+      #     args: Rscript .r-wasm.R
+      - name: Show dir contents
+        run: ls -Rlth .
+
       - name: Build wasm packages
-        uses: gcr.io/r-wasm/webr:main
+        uses: ./.github/barret
         with:
-          args: Rscript .r-wasm.R
+          packages: |
+            cli
+            shiny, rlang
+          strip: "NULL"
 
       - name: Show dir contents
-        run: ls -l .
+        run: ls -Rlth .
 
       - name: Move files from vfs to _site
         run: |
@@ -52,7 +62,7 @@ jobs:
           mv vfs/library.js.metadata _site/library.js.metadata
 
       - name: Show dir contents
-        run: ls -l .
+        run: ls -Rlth .
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2

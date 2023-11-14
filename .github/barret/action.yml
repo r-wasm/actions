@@ -1,0 +1,28 @@
+# action.yml
+name: 'Build wasm packages action'
+description: 'Build wasm packages using r-wasm/rwasm'
+inputs:
+  packages:
+    description: A file containing a list of R package references.
+    default: packages
+    required: false
+  strip:
+    description: |
+      An R expression evaluating to a character vector of directories to strip
+      when building the R package library image.
+    default: "NULL"
+    required: false
+
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+  args:
+    - Rscript
+    - /code.R
+    - ${{ inputs.packages }}
+    - ${{ inputs.strip }}
