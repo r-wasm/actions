@@ -24,13 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Show dir contents
-        run: ls -Rlth .
-
       - name: Build wasm packages
         uses: ./.github/actions/build-rwasm
         id: rwasm
         env:
+          # Would like to move this into the action itself
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         with:
           packages: cli
