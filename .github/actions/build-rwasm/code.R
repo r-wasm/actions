@@ -48,5 +48,5 @@ file.copy("vfs", out_dir, recursive = TRUE, overwrite = TRUE)
 dir(base_dir, recursive = TRUE, all.files = TRUE)
 
 # Set outputs
-cat("vfs_dir=", out_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
-cat("repo_dir=", repo_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+cat("vfs-dir=", out_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+cat("repo-dir=", repo_dir, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)

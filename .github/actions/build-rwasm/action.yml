@@ -12,9 +12,9 @@ inputs:
     default: "NULL"
     required: false
 outputs:
-  vfs_dir:
+  vfs-dir:
     description: 'Directory of the R package library filesystem image'
-  repo_dir:
+  repo-dir:
     description: 'Directory of the R package repository'
 # outputs:
 #   time: # id of output

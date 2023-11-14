@@ -41,9 +41,9 @@ jobs:
       - name: Move files from vfs to _site
         run: |
           mkdir -p _site
-          mv vfs/library.data _site/library.data
-          mv vfs/library.js.metadata _site/library.js.metadata
-          mv repo/* _site/
+          mv ${{ steps.rwasm.outputs.vfs-dir }}/library.data _site/library.data
+          mv ${{ steps.rwasm.outputs.vfs-dir }}/library.js.metadata _site/library.js.metadata
+          mv ${{ steps.rwasm.outputs.repo-dir }}/* _site/
 
       - name: Show dir contents
         run: ls -Rlth .
