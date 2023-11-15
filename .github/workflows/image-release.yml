@@ -61,7 +61,7 @@ jobs:
           packages: |
             ${{ inputs.packages }}
             ${{ steps.needs.outputs.pkg }}
-          path: ._rwasm
+          image-path: ._rwasm
 
       - name: Upload wasm image to release
         uses: svenstaro/upload-release-action@v2

@@ -5,7 +5,7 @@ inputs:
   packages:
     description: A set of R package values.
     required: true
-  path:
+  repo-path:
     description: The path to save the R package repository. By default, it will save to `./_site`.
     default: _site
     required: false
@@ -16,4 +16,4 @@ runs:
       uses: ./.github/actions/build-rwasm
       with:
         packages: ${{ inputs.packages }}
-        repo-path: ${{ inputs.path }}
+        repo-path: ${{ inputs.repo-path }}

@@ -5,32 +5,55 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
-name: r-wasm actions
+name: r-wasm/actions
 
 jobs:
-  build-workflow:
-    # Uses `build-wasm-packages@v1` internally
-    uses: ./.github/workflows/build.yml
+  workflow-repo:
+    uses: ./.github/workflows/repo-build-and-deploy.yml
     with:
-      packages: .github/_testing/packages
-  build:
-    name: Build wasm artifacts
+      packages: cli
+    permissions:
+      # To download GitHub Package within action
+      repository-projects: read
+      # For publishing to pages environment
+      pages: write
+      id-token: write
+
+  # workflow-image:
+  #   if: ${{ github.event_name == 'release' }}
+  #   uses: ./.github/workflows/image-release.yml
+  #   with:
+  #     packages: cli
+  #   permissions:
+  #     # For publishing artifact to release
+  #     contents: write
+  #     # To download GitHub Package within action
+  #     repository-projects: read
+
+  build-image:
     runs-on: ubuntu-latest
-    container: ghcr.io/r-wasm/webr:main
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./build-image
+        with:
+          packages: cli
+          image-path: _image
+      - name: Verify repo exist
+        shell: Rscript {0}
+        run: |
+          stopifnot(dir.exists("_image/library.data"))
+          stopifnot(dir.exists("_image/library.js.metadata"))
+  build-repo:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build wasm packages
-        uses: ./build-wasm-packages
+        uses: ./build-repo
         with:
           packages: .github/_testing/packages
-  download:
-    name: Download wasm artifacts
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Download wasm artifacts
-        uses: ./download-wasm-artifacts
-        with:
-          repo-path: _site
-          image-path: _site
+          repo-path: _repo
+      - name: Verify repo exist
+        shell: Rscript {0}
+        run: |
+          stopifnot(dir.exists("_repo/src"))
+          stopifnot(dir.exists("_repo/bin"))

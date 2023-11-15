@@ -1,0 +1,21 @@
+# Workflow derived from https://github.com/r-wasm/actions/tree/v1/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    # Only build on main or master branch
+    branches: [main, master]
+  # Or when triggered manually
+  workflow_dispatch:
+
+name: Build and deploy wasm R package repository
+
+jobs:
+  # Reads `./packages` for packages to put in repository on GitHub pages
+  repo-build-and-deploy:
+    uses: r-wasm/actions/.github/workflows/repo-build-and-deploy.yml@v1
+    permissions:
+      # To download GitHub Package within action
+      repository-projects: read
+      # For publishing to pages environment
+      pages: write
+      id-token: write

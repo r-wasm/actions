@@ -10,5 +10,17 @@ on:
 name: Build wasm R package repository
 
 jobs:
-  build:
-    uses: r-wasm/actions/.github/workflows/build.yml@v1
+  build-wasm-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build wasm repo
+        uses: r-wasm/actions/build-repo@v1
+        with:
+          packages: |
+            cli
+          repo-path: _repo
+
+      - name: Show repo dir contents
+        run: ls -Rlth .

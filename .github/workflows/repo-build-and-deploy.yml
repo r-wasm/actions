@@ -54,7 +54,7 @@ jobs:
         with:
           # If `.pkgs` does not exist, use `inputs.packages`
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
-          path: _site
+          repo-path: _site
 
       # TODO-barret; remove
       - name: Show dir contents
