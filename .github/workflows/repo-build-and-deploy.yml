@@ -13,17 +13,12 @@ on:
         default: ""
         type: string
         required: false
-      path:
-        description: The path to save the R package repository. By default, it will save to `./_site`.
-        default: "_site"
-        type: string
-        required: false
 
 name: Build & Deploy wasm R package repository
 
 jobs:
   # Build and upload the wasm packages
-  repository:
+  repo-build-and-deploy:
     runs-on: ubuntu-latest
     # Only run latest version of website
     concurrency:
@@ -59,7 +54,7 @@ jobs:
         with:
           # If `.pkgs` does not exist, use `inputs.packages`
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
-          path: ${{ inputs.path }}
+          path: _site
 
       # TODO-barret; remove
       - name: Show dir contents
