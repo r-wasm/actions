@@ -11,14 +11,19 @@ inputs:
       when building the R package library image.
     default: "NULL"
     required: false
-outputs:
-  vfs-dir:
-    description: 'Directory of the R package library filesystem image'
-  repo-dir:
-    description: 'Directory of the R package repository'
+  image-path:
+    description: Directory of where to save the R package library filesystem image
+    default: ""
+    required: false
+  repo-path:
+    description: Directory of where to save the R package repository
+    default: ""
+    required: false
 # outputs:
-#   time: # id of output
-#     description: 'The time we greeted you'
+#   vfs-dir:
+#     description: 'Directory of the R package library filesystem image'
+#   repo-dir:
+#     description: 'Directory of the R package repository'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -27,5 +32,7 @@ runs:
   args:
     # - Rscript
     - /code.R
+    - ${{ inputs.image-path }}
+    - ${{ inputs.repo-path }}
     - ${{ inputs.packages }}
     - ${{ inputs.strip }}

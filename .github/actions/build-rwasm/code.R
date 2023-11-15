@@ -1,27 +1,33 @@
 args <- commandArgs(trailingOnly = TRUE)
-# cat("\nargs:\n")
-# str(args)
+cat("\nargs:\n")
+str(args)
 
 if (length(args) == 0) {
-  stop(
-    "No `packages` specified. ",
-    "Please add extra argument to your Rscript call specify `packages`."
-  )
+  stop("No args supplied to Rscript. ")
+}
+
+image_path <- args[2]
+repo_path <- args[3]
+
+if (!nzchar(image_path) && !nzchar(repo_path)) {
+  stop("At least one of `image-path` or `repo-path` should be `true`.")
 }
 
 # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action#accessing-files-created-by-a-container-action
 # > When a container action runs, it will automatically map the default working directory (GITHUB_WORKSPACE) on the runner with the /github/workspace directory on the container. Any files added to this directory on the container will be available to any subsequent steps in the same job.
-local_rwasm_dir <- "_rwasm"
-gha_dir <- file.path("/github/workspace", local_rwasm_dir)
+# local_rwasm_dir <- "_rwasm"
+# gha_dir <- file.path("/github/workspace", local_rwasm_dir)
 
-packages <- args[1]
-strip <- if (length(args) > 1) args[2] else NULL
+gha_dir <- file.path("/github/workspace", out_dir)
+
+packages <- args[4]
+strip <- if (length(args) > 1) args[5] else NULL
 
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 if (is.character(strip) && strip == "NULL") strip <- NULL
 
-# cat("\nUpdated args:\n")
-# str(list(packages = packages, strip = strip))
+cat("\nUpdated args:\n")
+str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
 if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
 pak::pak("r-wasm/rwasm")
@@ -38,12 +44,23 @@ local({
   message("\n\nMaking library")
   rwasm::make_vfs_library(strip = strip)
 
+  copy_folder <- function(from_path, to_sub_path) {
+    # Quit if no path to copy to
+    if (!nzchar(to_sub_path)) {
+      return()
+    }
+
+    if (!dir.exists(dirname(to_path))) {
+      dir.create(dirname(to_path), recursive = TRUE)
+    }
+    file.copy(from_path, to_path, recursive = TRUE, overwrite = TRUE)
+  }
+
   # Copy files to original location.
-  if (!dir.exists(gha_dir)) dir.create(gha_dir, recursive = TRUE)
-  file.copy("repo", gha_dir, recursive = TRUE, overwrite = TRUE)
-  file.copy("vfs", gha_dir, recursive = TRUE, overwrite = TRUE)
+  copy_folder("vfs", image_path)
+  copy_folder("repo", repo_path)
 })
 
-# Set outputs
-cat("vfs-dir=", file.path(local_rwasm_dir, "vfs"), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
-cat("repo-dir=", file.path(local_rwasm_dir, "repo"), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+# # Set outputs
+# cat("vfs-dir=", file.path(local_rwasm_dir, "vfs"), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+# cat("repo-dir=", file.path(local_rwasm_dir, "repo"), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
