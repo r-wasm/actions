@@ -49,24 +49,26 @@ cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
 if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
-pak::pak(c("r-wasm/rwasm", "withr"))
+if (!require("withr", character.only = TRUE, quietly = TRUE)) install.packages("withr")
 
-local({
-  # Use the temp directory to not pollute the local action
-  # Future: Could set output of library once resolved: https://github.com/r-wasm/rwasm/issues/4
-  withr::local_dir(tempdir())
-  # If GITHUB_PAT isn't found, use GITHUB_TOKEN
-  withr::local_envvar(list(
-    "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN")),
-  ))
+# Use the temp directory to not pollute the local action
+# Future: Could set output of library once resolved: https://github.com/r-wasm/rwasm/issues/4
+withr::local_dir(tempdir())
 
-  message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
-  rwasm::add_pkg(packages)
+# If GITHUB_PAT isn't found, use GITHUB_TOKEN
+withr::local_envvar(list(
+  "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN"))
+))
 
-  message("\n\nMaking library")
-  rwasm::make_vfs_library(strip = strip)
+# Install rwasm (after PAT is set)
+pak::pak(c("r-wasm/rwasm"))
 
-  # Copy files to original location.
-  copy_folder("vfs", image_path)
-  copy_folder("repo", repo_path)
-})
+message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
+rwasm::add_pkg(packages)
+
+message("\n\nMaking library")
+rwasm::make_vfs_library(strip = strip)
+
+# Copy files to original location.
+copy_folder("vfs", image_path)
+copy_folder("repo", repo_path)
