@@ -4,14 +4,20 @@ on:
 name: Build and deploy repository
 
 jobs:
+  reuse:
+    uses: ./.github/workflows/repo-build-and-deploy.yml
+    with:
+      packages: cli
+
   # Build and upload the wasm packages
   repository:
+    if: false
     # Should match the name of `./build-wasm-packages` action name
     name: "Build and deploy repository"
     runs-on: ubuntu-latest
     # Only run latest version of website
     concurrency:
-      group: ${{ github.workflow }}
+      group: github-pages
       cancel-in-progress: true
     permissions:
       # For publishing to pages environment

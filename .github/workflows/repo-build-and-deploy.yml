@@ -1,0 +1,72 @@
+on:
+  # Allow users to run this workflow via reusable workflow
+  # Avoids boiler plate of setting the container and running the single steps
+  # Ex:
+  # jobs:
+  #   build:
+  #     uses: r-wasm/actions/.github/workflows/repo-build.yml@v1
+  workflow_call:
+    inputs:
+      # !! ./build-repo/action.yml inputs!!
+      packages:
+        description: A set of R package values. Defaults to reading `./packages` file.
+        default: ""
+        type: string
+        required: false
+      path:
+        description: The path to save the R package repository. By default, it will save to `./_site`.
+        default: "_site"
+        type: string
+        required: false
+
+name: Build & Deploy wasm R package repository
+
+jobs:
+  # Build and upload the wasm packages
+  repository:
+    runs-on: ubuntu-latest
+    # Only run latest version of website
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+    permissions:
+      # For publishing to pages environment
+      pages: write
+      # For publishing to pages environment
+      id-token: write
+      # To download GitHub Package within action
+      repository-projects: read
+    # Deploys to GitHub pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Retrieve packages from `./packages` file
+        if: ${{ inputs.packages == '' }}
+        id: packages-file
+        shell: Rscript {0}
+        run: |
+          if (!file.exists("./packages")) {
+            stop("`./packages` file not found (and `packages` input not provided)")
+          }
+          pkgs <- unique(readLines("./packages"))
+          cat("pkgs=", paste0(pkgs, collapse = ","), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+
+      - name: Build wasm repo
+        uses: ./build-repo
+        with:
+          # If `.pkgs` does not exist, use `inputs.packages`
+          packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
+          path: ${{ inputs.path }}
+
+      # TODO-barret; remove
+      - name: Show dir contents
+        run: ls -Rlth .
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
