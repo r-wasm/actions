@@ -1,0 +1,22 @@
+name: Build wasm package repository
+description: |
+  Build an CRAN-like repository of a set of R packages for WebAssembly.
+inputs:
+  packages:
+    description: A set of R package values.
+    required: true
+  path:
+    description: The path to save the R package repository. By default, it will save to `./_site`.
+    default: _site
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Build wasm package repository
+      uses: ./.github/actions/build-rwasm
+      env:
+        # Would like to move this into the action itself
+        GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        packages: ${{ inputs.packages }}
+        repo-path: ${{ inputs.path }}

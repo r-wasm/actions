@@ -27,16 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build wasm packages
-        uses: ./.github/actions/build-rwasm
-        id: rwasm
-        env:
-          # Would like to move this into the action itself
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build wasm image
+        uses: ./build-image
         with:
           packages: cli
-          repo-path: _site
-          image-path: _site
+      - name: Show dir contents
+        run: ls -Rlth .
+
+      - name: Build wasm repo
+        uses: ./build-repo
+        with:
+          packages: cli
 
       - name: Show dir contents
         run: ls -Rlth .
