@@ -49,14 +49,16 @@ cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
 if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
-pak::pak("r-wasm/rwasm")
+pak::pak(c("r-wasm/rwasm", "withr"))
 
 local({
   # Use the temp directory to not pollute the local action
   # Future: Could set output of library once resolved: https://github.com/r-wasm/rwasm/issues/4
-  wd <- getwd()
-  on.exit(setwd(wd), add = TRUE)
-  setwd(tempdir())
+  withr::local_dir(tempdir())
+  # If GITHUB_PAT isn't found, use GITHUB_TOKEN
+  withr::local_envvar(list(
+    "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN")),
+  ))
 
   message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
   rwasm::add_pkg(packages)
