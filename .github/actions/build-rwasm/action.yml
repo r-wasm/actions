@@ -19,11 +19,6 @@ inputs:
     description: Directory of where to save the R package repository
     default: ""
     required: false
-# outputs:
-#   vfs-dir:
-#     description: 'Directory of the R package library filesystem image'
-#   repo-dir:
-#     description: 'Directory of the R package repository'
 runs:
   using: 'docker'
   image: 'Dockerfile'
