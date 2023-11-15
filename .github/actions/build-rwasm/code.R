@@ -6,6 +6,7 @@ if (length(args) == 0) {
   stop("No args supplied to Rscript. ")
 }
 
+
 image_path <- args[2]
 repo_path <- args[3]
 
@@ -18,7 +19,7 @@ if (!nzchar(image_path) && !nzchar(repo_path)) {
 # local_rwasm_dir <- "_rwasm"
 # gha_dir <- file.path("/github/workspace", local_rwasm_dir)
 
-gha_dir <- file.path("/github/workspace", out_dir)
+gha_dir <- file.path("/github/workspace")
 
 packages <- args[4]
 strip <- if (length(args) > 1) args[5] else NULL
@@ -50,6 +51,7 @@ local({
       return()
     }
 
+    to_path <- file.path(gha_dir, to_sub_path)
     if (!dir.exists(dirname(to_path))) {
       dir.create(dirname(to_path), recursive = TRUE)
     }
