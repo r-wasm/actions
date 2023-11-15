@@ -7,8 +7,8 @@ if (length(args) == 0) {
 }
 
 
-image_path <- args[2]
-repo_path <- args[3]
+image_path <- args[1]
+repo_path <- args[2]
 
 if (!nzchar(image_path) && !nzchar(repo_path)) {
   stop("At least one of `image-path` or `repo-path` should be `true`.")
@@ -21,8 +21,8 @@ if (!nzchar(image_path) && !nzchar(repo_path)) {
 
 gha_dir <- file.path("/github/workspace")
 
-packages <- args[4]
-strip <- if (length(args) > 1) args[5] else NULL
+packages <- args[3]
+strip <- args[4]
 
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 if (is.character(strip) && strip == "NULL") strip <- NULL
