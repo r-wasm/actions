@@ -56,10 +56,6 @@ jobs:
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
           repo-path: _site
 
-      # TODO-barret; remove
-      - name: Show dir contents
-        run: ls -Rlth .
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
       - name: Deploy to GitHub Pages

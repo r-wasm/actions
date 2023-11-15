@@ -8,7 +8,7 @@ on:
 name: r-wasm/actions
 
 jobs:
-  workflow-repo:
+  reuse-workflow-repo:
     uses: ./.github/workflows/repo-build-and-deploy.yml
     with:
       packages: cli
@@ -19,7 +19,7 @@ jobs:
       pages: write
       id-token: write
 
-  # workflow-image:
+  # reuse-workflow-image:
   #   if: ${{ github.event_name == 'release' }}
   #   uses: ./.github/workflows/image-release.yml
   #   with:
@@ -41,6 +41,7 @@ jobs:
       - name: Verify repo exist
         shell: Rscript {0}
         run: |
+          print(dir("_image", recursive = TRUE))
           stopifnot(dir.exists("_image/library.data"))
           stopifnot(dir.exists("_image/library.js.metadata"))
   build-repo:
@@ -50,10 +51,12 @@ jobs:
       - name: Build wasm packages
         uses: ./build-repo
         with:
-          packages: .github/_testing/packages
+          packages: |
+            cli
           repo-path: _repo
       - name: Verify repo exist
         shell: Rscript {0}
         run: |
+          print(dir("_repo", recursive = TRUE))
           stopifnot(dir.exists("_repo/src"))
           stopifnot(dir.exists("_repo/bin"))
