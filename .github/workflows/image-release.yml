@@ -43,13 +43,24 @@ jobs:
 
       - uses: actions/checkout@v3
 
+      - name: Find `Config/Needs/wasm`
+        id: needs
+        shell: Rscript {0}
+        run: |
+          has_wasm_need <-
+            file.exists("DESCRIPTION") &&
+            "Config/Needs/wasm" %in% names(as.list(read.dcf("DESCRIPTION")[1,]))
+
+          pkg <- if (has_wasm_need) "Config/Needs/wasm" else ""
+          cat("pkg=", pkg, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+
       - name: Build wasm image
         uses: ./build-image
         with:
           # If `.pkgs` does not exist, use `inputs.packages`
           packages: |
             ${{ inputs.packages }}
-            Config/Needs/wasm
+            ${{ steps.needs.outputs.pkg }}
           path: ._rwasm
 
       - name: Upload wasm image to release
