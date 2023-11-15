@@ -24,11 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Needed to be able to adjust files after running Dockerfile
-      # Related: https://github.com/actions/runner/issues/434
-      - name: Use Docker in rootless mode.
-        uses: ScribeMD/rootless-docker@0.2.2
-
       - name: Build wasm packages
         uses: ./.github/actions/build-rwasm
         id: rwasm
