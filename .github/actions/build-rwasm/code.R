@@ -1,6 +1,6 @@
 args <- commandArgs(trailingOnly = TRUE)
-cat("\nargs:\n")
-str(args)
+# cat("\nargs:\n")
+# str(args)
 
 if (length(args) == 0) {
   stop("No args supplied to Rscript. ")
@@ -27,7 +27,7 @@ strip <- args[4]
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 if (is.character(strip) && strip == "NULL") strip <- NULL
 
-cat("\nUpdated args:\n")
+cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
 if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
@@ -50,12 +50,17 @@ local({
     if (!nzchar(to_sub_path)) {
       return()
     }
-
+    message("\nCopying ", from_path, " to ", to_sub_path)
     to_path <- file.path(gha_dir, to_sub_path)
-    if (!dir.exists(dirname(to_path))) {
-      dir.create(dirname(to_path), recursive = TRUE)
+    if (!dir.exists(to_path)) {
+      dir.create(to_path, recursive = TRUE)
     }
-    file.copy(from_path, to_path, recursive = TRUE, overwrite = TRUE)
+    file.copy(
+      dir(from_path, full.names = TRUE),
+      to_path,
+      recursive = TRUE,
+      overwrite = TRUE
+    )
   }
 
   # Copy files to original location.
