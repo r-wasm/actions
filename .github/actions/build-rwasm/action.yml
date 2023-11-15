@@ -22,8 +22,8 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  # env:
-  #   GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+  env:
+    GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
   args:
     # - Rscript
     - /code.R

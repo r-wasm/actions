@@ -22,9 +22,6 @@ runs:
   steps:
     - name: Build wasm package image
       uses: ./.github/actions/build-rwasm
-      env:
-        # Would like to move this into the action itself
-        GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       with:
         packages: ${{ inputs.packages }}
         image-path: ${{ inputs.path }}
