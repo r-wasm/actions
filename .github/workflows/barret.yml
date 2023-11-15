@@ -8,6 +8,12 @@ jobs:
     uses: ./.github/workflows/repo-build-and-deploy.yml
     with:
       packages: cli
+    permissions:
+      # To download GitHub Package within action
+      repository-projects: read
+      # For publishing to pages environment
+      pages: write
+      id-token: write
 
   # Build and upload the wasm packages
   repository:
