@@ -1,0 +1,62 @@
+on:
+  # Allow users to run this workflow via reusable workflow
+  # Avoids boiler plate of setting the container and running the single steps
+  # Ex:
+  # jobs:
+  #   build:
+  #     uses: r-wasm/actions/.github/workflows/repo-build.yml@v1
+  workflow_call:
+    inputs:
+      packages:
+        description: A set of R package values. Defaults to reading `./packages` file.
+        default: ""
+        type: string
+        required: false
+      strip:
+        description: |
+          An R expression evaluating to a character vector of directories to strip
+          when building the R package library image.
+        default: "NULL"
+        type: string
+        required: false
+
+name: Build & Upload wasm R package image
+
+jobs:
+  image-release:
+    runs-on: ubuntu-latest
+    # Only run latest version of release asset
+    concurrency:
+      group: release
+      cancel-in-progress: true
+    permissions:
+      # For publishing artifact to release
+      contents: write
+      # To download GitHub Package within action
+      repository-projects: read
+    steps:
+      - name: Validate event is release
+        if: github.event_name != 'release'
+        run: |
+          echo "This workflow should only be triggered release events"
+          exit 1
+
+      - uses: actions/checkout@v3
+
+      - name: Build wasm image
+        uses: ./build-image
+        with:
+          # If `.pkgs` does not exist, use `inputs.packages`
+          packages: |
+            ${{ inputs.packages }}
+            Config/Needs/wasm
+          path: ._rwasm
+
+      - name: Upload wasm image to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "._rwasm/*"
+          tag: ${{ github.ref }}
+          file_glob: true
+          overwrite: true

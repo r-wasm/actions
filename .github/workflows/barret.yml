@@ -24,5 +24,7 @@ jobs:
     with:
       packages: cli
     permissions:
-      # To upload the release
+      # For publishing artifact to release
       contents: write
+      # To download GitHub Package within action
+      repository-projects: read
