@@ -1,13 +1,13 @@
 on:
   push:
 
-name: Build and Deploy repository
+name: Build and deploy repository
 
 jobs:
   # Build and upload the wasm packages
-  build:
+  repository:
     # Should match the name of `./build-wasm-packages` action name
-    name: "Build repository"
+    name: "Build and deploy repository"
     runs-on: ubuntu-latest
     # Only run latest version of website
     concurrency:
