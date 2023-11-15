@@ -5,5 +5,5 @@ FROM ghcr.io/r-wasm/webr:main
 COPY code.R /code.R
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-# ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 ENTRYPOINT [ "Rscript" ]
+# ENTRYPOINT [ "/bin/bash", "-l", "-c" ]

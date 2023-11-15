@@ -1,10 +1,13 @@
 on:
   push:
+  release:
+    types: [published]
 
-name: Build and deploy repository
+name: Debug
 
 jobs:
-  reuse:
+  repo:
+    if: ${{ github.event_name == 'push' }}
     uses: ./.github/workflows/repo-build-and-deploy.yml
     with:
       packages: cli
@@ -15,47 +18,11 @@ jobs:
       pages: write
       id-token: write
 
-  # Build and upload the wasm packages
-  repository:
-    if: false
-    # Should match the name of `./build-wasm-packages` action name
-    name: "Build and deploy repository"
-    runs-on: ubuntu-latest
-    # Only run latest version of website
-    concurrency:
-      group: github-pages
-      cancel-in-progress: true
+  image:
+    if: ${{ github.event_name == 'release' }}
+    uses: ./.github/workflows/image-release.yml
+    with:
+      packages: cli
     permissions:
-      # For publishing to pages environment
-      pages: write
-      # For publishing to pages environment
-      id-token: write
-      # To download GitHub Package within action
-      repository-projects: read
-    # Deploys to GitHub pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Build wasm image
-        uses: ./build-image
-        with:
-          packages: cli
-      - name: Show dir contents
-        run: ls -Rlth .
-
-      - name: Build wasm repo
-        uses: ./build-repo
-        with:
-          packages: cli
-
-      - name: Show dir contents
-        run: ls -Rlth .
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      # To upload the release
+      contents: write
