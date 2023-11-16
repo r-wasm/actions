@@ -37,8 +37,8 @@ jobs:
         shell: Rscript {0}
         run: |
           print(dir("_image", recursive = TRUE))
-          stopifnot(dir.exists("_image/library.data"))
-          stopifnot(dir.exists("_image/library.js.metadata"))
+          stopifnot(file.exists("_image/library.data"))
+          stopifnot(file.exists("_image/library.js.metadata"))
   build-repo:
     runs-on: ubuntu-latest
     steps:
