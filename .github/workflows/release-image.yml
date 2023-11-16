@@ -4,12 +4,12 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/repo-build.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/build-image.yml@v1
   workflow_call:
     inputs:
       packages:
-        description: A set of R package values. Defaults to reading `./packages` file.
-        default: ""
+        description: A set of R package values. In addition to `packages` value, any R packages listed in `Config/Needs/wasm` in the `DESCRIPTION` file will automatically be added to the list.
+        default: "file::."
         type: string
         required: false
       strip:
@@ -23,17 +23,20 @@ on:
 name: Build & Upload wasm R package image
 
 jobs:
-  image-release:
+  release-image:
     runs-on: ubuntu-latest
+
     # Only run latest version of release asset
     concurrency:
       group: release
       cancel-in-progress: true
+
     permissions:
-      # For publishing artifact to release
+      # For publishing artifact files to the release
       contents: write
-      # To download GitHub Package within action
+      # To download GitHub Packages within action
       repository-projects: read
+
     steps:
       - name: Validate event is release
         if: github.event_name != 'release'
@@ -43,24 +46,10 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: Find `Config/Needs/wasm`
-        id: needs
-        shell: Rscript {0}
-        run: |
-          has_wasm_need <-
-            file.exists("DESCRIPTION") &&
-            "Config/Needs/wasm" %in% names(as.list(read.dcf("DESCRIPTION")[1,]))
-
-          pkg <- if (has_wasm_need) "Config/Needs/wasm" else ""
-          cat("pkg=", pkg, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
-
       - name: Build wasm image
         uses: ./build-image
         with:
-          # If `.pkgs` does not exist, use `inputs.packages`
-          packages: |
-            ${{ inputs.packages }}
-            ${{ steps.needs.outputs.pkg }}
+          packages: ${{ inputs.packages }}
           image-path: ._rwasm
 
       - name: Upload wasm image to release

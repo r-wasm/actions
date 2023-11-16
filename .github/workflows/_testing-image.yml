@@ -1,0 +1,14 @@
+on:
+  release:
+    types: [published]
+
+name: r-wasm/actions - image
+
+jobs:
+  image:
+    uses: ./.github/workflows/release-image.yml
+    with:
+      packages: cli
+    permissions:
+      contents: write
+      repository-projects: read

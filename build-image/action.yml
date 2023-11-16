@@ -3,8 +3,9 @@ description: |
   Build an image of a set of R packages for WebAssembly.
 inputs:
   packages:
-    description: A set of R package values.
-    required: true
+    description: A string of R package references. In addition to `packages` value, any R packages listed in `Config/Needs/wasm` in the `DESCRIPTION` file will automatically be added to the list.
+    default: "file::."
+    required: false
   strip:
     description: |
       An R expression evaluating to a character vector of directories to strip
@@ -13,16 +14,29 @@ inputs:
     required: false
   image-path:
     description: |
-      The path to the directory containing the R package library filesystem
-      image. By default, it will save to `./_site`.
-    default: _site
+      The path to the directory where the R package library filesystem
+      image files should be saved.
+    default: "."
     required: false
 runs:
   using: "composite"
   steps:
+    - name: Find `Config/Needs/wasm` in DESCRIPTION
+      id: needs
+      shell: Rscript {0}
+      run: |
+        has_wasm_need <-
+          file.exists("DESCRIPTION") &&
+          "Config/Needs/wasm" %in% names(as.list(read.dcf("DESCRIPTION")[1,]))
+
+        pkg <- if (has_wasm_need) "Config/Needs/wasm" else ""
+        cat("pkg=", pkg, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+
     - name: Build wasm package image
       uses: ./.github/actions/build-rwasm
       with:
-        packages: ${{ inputs.packages }}
+        packages: |
+          ${{ inputs.packages }}
+          ${{ steps.needs.outputs.pkg }}
         image-path: ${{ inputs.image-path }}
         strip: ${{ inputs.strip }}

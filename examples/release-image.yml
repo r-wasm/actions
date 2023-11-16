@@ -8,12 +8,13 @@ on:
 name: Build and deploy wasm R package image
 
 jobs:
-  image-release:
-    uses: r-wasm/actions/.github/workflows/image-release.yml@v1
+  release-image:
+    uses: r-wasm/actions/.github/workflows/release-image.yml@v1
     permissions:
-      # For publishing artifact to release
+      # For publishing artifact files to the release
       contents: write
-      # To download GitHub Package within action
+      # To download GitHub Packages within action
       repository-projects: read
     with:
+      # Remove many directories to reduce image size
       strip: c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")

@@ -10,11 +10,12 @@ on:
 name: Build and deploy wasm R package repository
 
 jobs:
-  # Reads `./packages` for packages to put in repository on GitHub pages
-  repo-build-and-deploy:
-    uses: r-wasm/actions/.github/workflows/repo-build-and-deploy.yml@v1
+  # Reads `./packages` for package references to put
+  # into a CRAN-like repository hosted on GitHub pages
+  build-and-deploy-repo:
+    uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
     permissions:
-      # To download GitHub Package within action
+      # To download GitHub Packages within action
       repository-projects: read
       # For publishing to pages environment
       pages: write

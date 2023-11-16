@@ -4,37 +4,40 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/repo-build.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
   workflow_call:
     inputs:
       # !! ./build-repo/action.yml inputs!!
       packages:
-        description: A set of R package values. Defaults to reading `./packages` file.
+        description: A set of R package references. If an empty value is provided (default), the workflow will read `./packages` file for the R package references.
         default: ""
         type: string
         required: false
 
-name: Build & Deploy wasm R package repository
+name: Build and deploy wasm R package repository
 
 jobs:
   # Build and upload the wasm packages
-  repo-build-and-deploy:
+  build-and-deploy-repo:
     runs-on: ubuntu-latest
+
     # Only run latest version of website
     concurrency:
       group: github-pages
       cancel-in-progress: true
+
     permissions:
+      # To download GitHub Packages within action
+      repository-projects: read
       # For publishing to pages environment
       pages: write
-      # For publishing to pages environment
       id-token: write
-      # To download GitHub Package within action
-      repository-projects: read
+
     # Deploys to GitHub pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v3
 
