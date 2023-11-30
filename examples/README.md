@@ -13,7 +13,7 @@ Great for groups and organizations using a meta GitHub repo to create a centrali
 #### Steps
 
 1. Checkout the GitHub repository
-2. Build the repository with `r-wasm/actions/build-repo`
+2. Build the repository with `r-wasm/actions/build-cran-repo`
 3. Deploy the repository to GitHub pages with `actions/upload-pages-artifact`
 
 #### Inputs available
@@ -39,7 +39,7 @@ This is typically used within R packages to build and release a WebAssembly R pa
 #### Steps
 
 1. Checkout the GitHub repository
-2. Build the library image with `r-wasm/actions/build-repo`
+2. Build the library image with `r-wasm/actions/build-cran-repo`
 3. Add the library image to the release with `svenstaro/upload-release-action`
 
 #### Inputs available

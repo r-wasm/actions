@@ -39,12 +39,12 @@ jobs:
           print(dir("_image", recursive = TRUE))
           stopifnot(file.exists("_image/library.data"))
           stopifnot(file.exists("_image/library.js.metadata"))
-  build-repo:
+  build-cran-repo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build wasm packages
-        uses: ./build-repo
+        uses: ./build-cran-repo
         with:
           packages: |
             cli

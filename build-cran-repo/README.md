@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build wasm repo
-      uses: r-wasm/actions/build-repo@v1
+      uses: r-wasm/actions/build-cran-repo@v1
       with:
         packages: |
           cli

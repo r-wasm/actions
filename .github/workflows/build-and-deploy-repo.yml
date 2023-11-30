@@ -7,7 +7,7 @@ on:
   #     uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
   workflow_call:
     inputs:
-      # !! ./build-repo/action.yml inputs!!
+      # !! ./build-cran-repo/action.yml inputs!!
       packages:
         description: A set of R package references. If an empty value is provided (default), the workflow will read `./packages` file for the R package references.
         default: ""
@@ -53,7 +53,7 @@ jobs:
           cat("pkgs=", paste0(pkgs, collapse = ","), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
 
       - name: Build wasm repo
-        uses: ./build-repo
+        uses: ./build-cran-repo
         with:
           # If `.pkgs` does not exist, use `inputs.packages`
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}

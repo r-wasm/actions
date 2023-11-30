@@ -27,9 +27,9 @@ For more documentation about these worfklows, please see the [reusable workflow 
 
 ## Actions
 
-* [`r-wasm/actions/build-image`](https://github.com/r-wasm/actions/tree/main/build-image) - Builds a R package into an WebAssembly file image. This is useful for [mounting a Wasm R package library](https://docs.r-wasm.org/webr/latest/mounting.html) directory in a container using only two files.
+* [`r-wasm/actions/build-file-system-image`](https://github.com/r-wasm/actions/tree/main/build-file-system-image) - Builds a R package into an WebAssembly file image. This is useful for [mounting a Wasm R package library](https://docs.r-wasm.org/webr/latest/mounting.html) directory in a container using only two files.
 
-* [`r-wasm/actions/build-repo`](https://github.com/r-wasm/actions/tree/main/build-wasm-packages) - Build a set of R packages for WebAssembly in a CRAN-like repository containing the R package binaries.
+* [`r-wasm/actions/build-cran-repo`](https://github.com/r-wasm/actions/tree/main/build-wasm-packages) - Build a set of R packages for WebAssembly in a CRAN-like repository containing the R package binaries.
 
 ## Examples
 
