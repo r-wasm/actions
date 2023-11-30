@@ -25,11 +25,11 @@ jobs:
   #     contents: write
   #     repository-projects: read
 
-  build-image:
+  build-file-system-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./build-image
+      - uses: ./build-file-system-image
         with:
           packages: cli
           image-path: _image

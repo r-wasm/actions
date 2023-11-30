@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/build-image.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v1
   workflow_call:
     inputs:
       packages:
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build wasm image
-        uses: ./build-image
+        uses: ./build-file-system-image
         with:
           packages: ${{ inputs.packages }}
           image-path: ._rwasm

@@ -18,7 +18,6 @@ jobs:
 
 * [`r-wasm/actions/.github/workflows/build-and-deploy-repo.yml`](https://github.com/r-wasm/actions/tree/main/.github/workflows#build-and-deploy-repo.yml) - Reusable workflow that will build a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)). Great for groups and organizations using a meta GitHub repo to create a centralized R WebAssembly CRAN-like repository. Similar to CRAN, users do not need to download every package and only the latest published repository version will persist.
 
-TODO-barret; Rename `build-image` to `build-file-system-image``
 
 * [r-wasm/actions/.github/workflows/release-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows#release-image.yml) - Reusable workflow that builds a [WebAssembly file image](https://docs.r-wasm.org/webr/latest/mounting.html) and adds the files to a GitHub release. This is typically used within R packages to build and release a Wasm R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
 

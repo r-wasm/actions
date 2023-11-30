@@ -28,7 +28,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Build wasm image
-      uses: ./build-image
+      uses: ./build-file-system-image
 
     # Use `library.data` and `library.js.metadata` files in `./_site` directory
     # to create a GitHub Pages site.
