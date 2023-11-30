@@ -1,4 +1,4 @@
-# build-wasm-packages
+# build-file-system-image
 
 This action builds a list of R packages for WebAssembly and creates WebAssembly file image containing an R package library.
 

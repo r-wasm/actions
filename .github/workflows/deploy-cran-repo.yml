@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
   workflow_call:
     inputs:
       # !! ./build-cran-repo/action.yml inputs!!
@@ -18,7 +18,7 @@ name: Build and deploy wasm R package repository
 
 jobs:
   # Build and upload the wasm packages
-  build-and-deploy-repo:
+  deploy-cran-repo:
     runs-on: ubuntu-latest
 
     # Only run latest version of website

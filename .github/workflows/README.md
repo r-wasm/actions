@@ -6,7 +6,7 @@ Workflows whose name starts with an `_` are for internal use only and should not
 
 ## Reusable workflows
 
-### [build-and-deploy-repo.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows/build-and-deploy-repo.yml)
+### [deploy-cran-repo.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows/deploy-cran-repo.yml)
 
 Builds a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)).
 
@@ -28,7 +28,7 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/build-and-deploy-repo.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/deploy-cran-repo.yml"
 )
 ```
 

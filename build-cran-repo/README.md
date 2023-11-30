@@ -1,4 +1,4 @@
-# build-wasm-packages
+# build-cran-repo
 
 This action builds a list of R packages for WebAssembly and creates a CRAN-like repository containing the R package binaries.
 
@@ -32,15 +32,15 @@ jobs:
         repo-path: out-repo
 ```
 
-Typically, the repository is then used to create a GitHub Pages site. This can be done using the [`build-and-deploy-repo`](../examples/build-and-deploy.yml) workflow example.
+Typically, the repository is then used to create a GitHub Pages site. This can be done using the [`deploy-cran-repo`](../examples/deploy-cran-repo.yml) workflow example.
 
 ```yaml
 on:
   push:
     branches: [main, master]
 jobs:
-  build-and-deploy-repo:
-    uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
+  deploy-cran-repo:
+    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     permissions:
       repository-projects: read
       pages: write
@@ -51,6 +51,6 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/build-and-deploy-repo.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/deploy-cran-repo.yml"
 )
 ```

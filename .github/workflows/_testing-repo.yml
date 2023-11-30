@@ -9,7 +9,7 @@ name: r-wasm/actions - repo
 
 jobs:
   reuse-workflow-repo:
-    uses: ./.github/workflows/build-and-deploy-repo.yml
+    uses: ./.github/workflows/deploy-cran-repo.yml
     with:
       packages: cli
     permissions:

@@ -12,8 +12,8 @@ name: Build and deploy wasm R package repository
 jobs:
   # Reads `./packages` for package references to put
   # into a CRAN-like repository hosted on GitHub pages
-  build-and-deploy-repo:
-    uses: r-wasm/actions/.github/workflows/build-and-deploy-repo.yml@v1
+  deploy-cran-repo:
+    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
     permissions:
       # To download GitHub Packages within action
       repository-projects: read
