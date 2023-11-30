@@ -15,6 +15,3 @@ jobs:
       contents: write
       # To download GitHub Packages within action
       repository-projects: read
-    with:
-      # Remove many directories to reduce image size
-      strip: c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")
