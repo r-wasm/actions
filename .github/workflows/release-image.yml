@@ -23,7 +23,7 @@ on:
 name: Build & Upload wasm R package image
 
 jobs:
-  release-image:
+  release-filesystem-image:
     runs-on: ubuntu-latest
 
     # Only run latest version of release asset

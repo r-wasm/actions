@@ -30,7 +30,7 @@ usethis::use_github_action(
 )
 ```
 
-### [release-image.yml](https://github.com/r-wasm/actions/tree/main/examples/release-image.yml)
+### [release-filesystem-image.yml](https://github.com/r-wasm/actions/tree/main/examples/release-filesystem-image.yml)
 
 On a published GitHub release, it builds a WebAssembly file image and adds the files to a GitHub release.
 
@@ -53,6 +53,6 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/release-image.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/release-filesystem-image.yml"
 )
 ```

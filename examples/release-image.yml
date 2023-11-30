@@ -8,8 +8,8 @@ on:
 name: Build and deploy wasm R package image
 
 jobs:
-  release-image:
-    uses: r-wasm/actions/.github/workflows/release-image.yml@v1
+  release-filesystem-image:
+    uses: r-wasm/actions/.github/workflows/release-filesystem-image.yml@v1
     permissions:
       # For publishing artifact files to the release
       contents: write

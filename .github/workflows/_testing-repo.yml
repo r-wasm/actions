@@ -18,7 +18,7 @@ jobs:
       id-token: write
 
   # reuse-workflow-image:
-  #   uses: ./.github/workflows/release-image.yml
+  #   uses: ./.github/workflows/release-filesystem-image.yml
   #   with:
   #     packages: cli
   #   permissions:
