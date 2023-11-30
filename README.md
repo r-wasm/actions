@@ -16,17 +16,21 @@ jobs:
 
 ## Reusable workflows
 
-* [`r-wasm/actions/.github/workflows/build-and-deploy-repo.yml`](https://github.com/r-wasm/actions/tree/main/.github/workflows#build-and-deploy-repo.yml) - Reusable workflow that will build a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)). Great for groups and organizations using a meta GitHub repo to create a centralized R WebAssembly CRAN-like repository. Similar to CRAN, only the latest published repository version will persist.
+* [`r-wasm/actions/.github/workflows/build-and-deploy-repo.yml`](https://github.com/r-wasm/actions/tree/main/.github/workflows#build-and-deploy-repo.yml) - Reusable workflow that will build a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)). Great for groups and organizations using a meta GitHub repo to create a centralized R WebAssembly CRAN-like repository. Similar to CRAN, users do not need to download every package and only the latest published repository version will persist.
 
-* [r-wasm/actions/.github/workflows/release-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows#release-image.yml) - Reusable workflow that builds a R library bundle and adds the files to a GitHub release. This is typically used within R packages to build and release a Wasm R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
+TODO-barret; Rename `build-image` to `build-file-system-image``
+
+* [r-wasm/actions/.github/workflows/release-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows#release-image.yml) - Reusable workflow that builds a [WebAssembly file image](https://docs.r-wasm.org/webr/latest/mounting.html) and adds the files to a GitHub release. This is typically used within R packages to build and release a Wasm R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
+
+For more documentation about these worfklows, please see the [reusable workflow readme](https://github.com/r-wasm/actions/tree/main/.github/workflows).
+
 
 
 ## Actions
 
-* [`r-wasm/actions/build-image`](https://github.com/r-wasm/actions/tree/main/build-image) - Builds a R WebAssembly package library image bundle. This is useful for mounting a Wasm R package library directory in a container using only two files.
+* [`r-wasm/actions/build-image`](https://github.com/r-wasm/actions/tree/main/build-image) - Builds a R package into an WebAssembly file image. This is useful for [mounting a Wasm R package library](https://docs.r-wasm.org/webr/latest/mounting.html) directory in a container using only two files.
 
-* [`r-wasm/actions/build-repo`](https://github.com/r-wasm/actions/tree/main/build-wasm-packages) - Build a set of R packages for WebAssembly in a CRAN-like repository containing the R package binaries. Useful for
-
+* [`r-wasm/actions/build-repo`](https://github.com/r-wasm/actions/tree/main/build-wasm-packages) - Build a set of R packages for WebAssembly in a CRAN-like repository containing the R package binaries.
 
 ## Examples
 

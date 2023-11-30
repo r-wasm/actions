@@ -35,7 +35,7 @@ usethis::use_github_action(
 
 ### [release-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows/release-image.yml)
 
-Builds a R library bundle and adds the files to a GitHub release.
+Builds a WebAssembly file image and adds the files to a GitHub release.
 
 This is typically used within R packages to build and release a WebAssembly R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
 

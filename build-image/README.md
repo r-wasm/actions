@@ -1,6 +1,6 @@
 # build-wasm-packages
 
-This action builds a list of R packages for WebAssembly and creates file bundle containing an R package library.
+This action builds a list of R packages for WebAssembly and creates WebAssembly file image containing an R package library.
 
 This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build packages for WebAssembly, which must be run in Docker container `ghcr.io/r-wasm/webr:main` to ensure access to a Wasm development toolchain. By requiring the step to use Docker, the action can only be run in `ubuntu` based runners.
 
@@ -15,7 +15,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 ## Steps
 
 1. Install latest `r-wasm/rwasm`
-2. Create the bundle using `{rwasm}`
+2. Create the WebAssembly file image using `{rwasm}`
 3. Copy files to `image-path` directory
 
 ## Usage
