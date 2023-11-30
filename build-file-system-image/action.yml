@@ -8,8 +8,7 @@ inputs:
     required: false
   strip:
     description: |
-      An R expression evaluating to a character vector of directories to strip
-      when building the R package library image.
+      An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
     default: "NULL"
     required: false
   image-path:

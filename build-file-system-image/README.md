@@ -10,7 +10,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
   *
 * **image-path** (`.`) - The path to the directory where the R package library filesystem image files should be saved.
   * Note: Due to limitations in GitHub Actions, the saved files can not be altered in any subsquent steps. Related: [actions/runner#434](https://github.com/actions/runner/issues/434).
-* **strip** (`NULL`) - An R expression evaluating to a character vector of directories to strip when building the R package library image. Only the R package library is affected, the R package repository remains unchanged.
+* **strip** (`NULL`) - An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
 
 ## Steps
 
@@ -46,8 +46,6 @@ jobs:
     permissions:
       contents: write
       repository-projects: read
-    with:
-      strip: c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")
 ```
 
 To leverage this reusable workflow, run the following R command in the root of your GitHub repository:
