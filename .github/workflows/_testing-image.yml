@@ -6,7 +6,7 @@ name: r-wasm/actions - image
 
 jobs:
   image:
-    uses: ./.github/workflows/release-filesystem-image.yml
+    uses: ./.github/workflows/release-file-system-image.yml
     with:
       packages: cli
     permissions:

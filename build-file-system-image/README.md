@@ -34,15 +34,15 @@ jobs:
     # to create a GitHub Pages site.
 ```
 
-To add the library image files to any GitHub release as assets files, use the [`release-filesystem-image`](../examples/release-filesystem-image.yml) workflow example.
+To add the library image files to any GitHub release as assets files, use the [`release-file-system-image`](../examples/release-file-system-image.yml) workflow example.
 
 ```yaml
 on:
   release:
     types: [ published ]
 jobs:
-  release-filesystem-image:
-    uses: r-wasm/actions/.github/workflows/release-filesystem-image.yml@v1
+  release-file-system-image:
+    uses: r-wasm/actions/.github/workflows/release-file-system-image.yml@v1
     permissions:
       contents: write
       repository-projects: read
@@ -52,6 +52,6 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/release-filesystem-image.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/release-file-system-image.yml"
 )
 ```
