@@ -6,7 +6,7 @@ This directory contains example workflows that call `r-wasm/actions`'s [reusable
 
 ### [deploy-cran-repo.yml](https://github.com/r-wasm/actions/tree/main/examples/deploy-cran-repo.yml)
 
-On a push to the `main` branch on GitHub, it builds a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)).
+On a push to the `main` branch on GitHub, it builds a CRAN-like repository for R WebAssembly and deploys the repo to GitHub Pages ([in beta](https://github.com/actions/upload-pages-artifact)).
 
 Great for groups and organizations using a meta GitHub repo to create a centralized R WebAssembly CRAN-like repository.  Similar to CRAN, only the latest published repository version will persist.
 

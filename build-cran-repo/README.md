@@ -32,7 +32,9 @@ jobs:
         repo-path: out-repo
 ```
 
-Typically, the repository is then used to create a GitHub Pages site. This can be done using the [`deploy-cran-repo`](../examples/deploy-cran-repo.yml) workflow example.
+Typically, the resulting CRAN-like repository is then used to create a GitHub Pages site. This can be done using the [`deploy-cran-repo`](../examples/deploy-cran-repo.yml) workflow example.
+
+The package repository can alternatively be deployed to other static storage hosting in subsequent steps.
 
 ```yaml
 on:

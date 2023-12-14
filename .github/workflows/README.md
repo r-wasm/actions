@@ -8,7 +8,7 @@ Workflows whose name starts with an `_` are for internal use only and should not
 
 ### [deploy-cran-repo.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows/deploy-cran-repo.yml)
 
-Builds a CRAN-like repository for R WebAssembly and deploys the repo to GitHub pages ([in beta](https://github.com/actions/upload-pages-artifact)).
+Builds a CRAN-like repository for R WebAssembly and deploys the repo to GitHub Pages ([in beta](https://github.com/actions/upload-pages-artifact)).
 
 Great for groups and organizations using a meta GitHub repo to create a centralized R WebAssembly CRAN-like repository.  Similar to CRAN, only the latest published repository version will persist.
 
@@ -35,7 +35,7 @@ usethis::use_github_action(
 
 ### [release-file-system-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows/release-file-system-image.yml)
 
-Builds a WebAssembly file image and adds the files to a GitHub release.
+Builds a [WebAssembly file image](https://docs.r-wasm.org/webr/latest/mounting.html)  and adds the files to a GitHub release.
 
 This is typically used within R packages to build and release a WebAssembly R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
 
