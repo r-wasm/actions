@@ -44,7 +44,7 @@ This is typically used within R packages to build and release a WebAssembly R pa
 
 #### Inputs available
 
-* **packages** (`'file::.'`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
+* **packages** (`'.'`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
 * **strip** (`NULL`) - An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
 
 

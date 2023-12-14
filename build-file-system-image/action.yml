@@ -4,7 +4,7 @@ description: |
 inputs:
   packages:
     description: A string of R package references. In addition to `packages` value, any R packages listed in `Config/Needs/wasm` in the `DESCRIPTION` file will automatically be added to the list.
-    default: "file::."
+    default: "."
     required: false
   strip:
     description: |

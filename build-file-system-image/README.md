@@ -6,7 +6,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 
 ## Inputs
 
-* **packages** (`file::.`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
+* **packages** (`.`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
 * **image-path** (`.`) - The path to the directory where the R package library filesystem image files should be saved.
   * Note: Due to limitations in GitHub Actions, the saved files can not be altered in any subsquent steps. Related: [actions/runner#434](https://github.com/actions/runner/issues/434).
 * **strip** (`NULL`) - An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
