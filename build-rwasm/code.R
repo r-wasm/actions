@@ -27,33 +27,14 @@ strip <- args[4]
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 if (is.character(strip) && strip == "NULL") strip <- NULL
 
-copy_folder <- function(from_path, to_sub_path) {
-  # Quit if no path to copy to
-  if (!nzchar(to_sub_path)) {
-    return()
-  }
-  message("\nCopying ", from_path, " to ", to_sub_path)
-  to_path <- file.path(gha_dir, to_sub_path)
-  if (!dir.exists(to_path)) {
-    dir.create(to_path, recursive = TRUE)
-  }
-  file.copy(
-    dir(from_path, full.names = TRUE),
-    to_path,
-    recursive = TRUE,
-    overwrite = TRUE
-  )
-}
-
 cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
 if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
 if (!require("withr", character.only = TRUE, quietly = TRUE)) install.packages("withr")
 
-# Use the temp directory to not pollute the local action
-# Future: Could set output of library once resolved: https://github.com/r-wasm/rwasm/issues/4
-withr::local_dir(tempdir())
+# Work in the GHA directory so that package reference 'local::.' works as expected
+withr::local_dir(gha_dir)
 
 # If GITHUB_PAT isn't found, use GITHUB_TOKEN
 withr::local_envvar(list(
@@ -64,11 +45,7 @@ withr::local_envvar(list(
 pak::pak(c("r-wasm/rwasm"))
 
 message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
-rwasm::add_pkg(packages)
+rwasm::add_pkg(packages, repo_dir = repo_path)
 
 message("\n\nMaking library")
-rwasm::make_vfs_library(strip = strip)
-
-# Copy files to original location.
-copy_folder("vfs", image_path)
-copy_folder("repo", repo_path)
+rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip)
