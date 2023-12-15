@@ -26,7 +26,7 @@ strip <- args[4]
 
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 strip <- strsplit(strip, "[[:space:],]+")[[1]]
-if (is.character(strip) && strip == "NULL") strip <- NULL
+if (is.character(strip) && length(strip) == 1 && strip == "NULL") strip <- NULL
 
 cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
