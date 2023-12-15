@@ -1,0 +1,30 @@
+# action.yml
+name: 'Build wasm packages action'
+description: 'Build wasm packages using r-wasm/rwasm'
+inputs:
+  packages:
+    description: A string of R package references.
+    required: true
+  strip:
+    description: |
+      An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
+    default: "NULL"
+    required: false
+  image-path:
+    description: Directory where the R package library filesystem image files should be saved.
+    default: "."
+    required: false
+  repo-path:
+    description: Directory where the R package repository should be saved.
+    default: "_site"
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    # - Rscript
+    - /code.R
+    - ${{ inputs.image-path }}
+    - ${{ inputs.repo-path }}
+    - ${{ inputs.packages }}
+    - ${{ inputs.strip }}

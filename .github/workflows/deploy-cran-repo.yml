@@ -1,0 +1,75 @@
+on:
+  # Allow users to run this workflow via reusable workflow
+  # Avoids boiler plate of setting the container and running the single steps
+  # Ex:
+  # jobs:
+  #   build:
+  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
+  workflow_call:
+    inputs:
+      # !! ./build-cran-repo/action.yml inputs!!
+      packages:
+        description: A set of R package references. If an empty value is provided (default), the workflow will read `./packages` file for the R package references.
+        default: ""
+        type: string
+        required: false
+
+name: Build and deploy wasm R package repository
+
+jobs:
+  # Build and upload the wasm packages
+  deploy-cran-repo:
+    runs-on: ubuntu-latest
+
+    # Only run latest version of website
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+
+    permissions:
+      # To download GitHub Packages within action
+      repository-projects: read
+      # For publishing to pages environment
+      pages: write
+      id-token: write
+
+    # Deploys to GitHub pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout calling repository
+        uses: actions/checkout@v4
+
+      - name: Checkout r-wasm/actions repository
+        uses: actions/checkout@v4
+        with:
+          ref: v1
+          repository: r-wasm/actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .actions
+
+      - name: Retrieve packages from `./packages` file
+        if: ${{ inputs.packages == '' }}
+        id: packages-file
+        shell: Rscript {0}
+        run: |
+          if (!file.exists("./packages")) {
+            stop("`./packages` file not found (and `packages` input not provided)")
+          }
+          pkgs <- unique(readLines("./packages"))
+          cat("pkgs=", paste0(pkgs, collapse = ","), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+
+      - name: Build wasm repo
+        uses: ./.actions/build-rwasm
+        with:
+          # If `.pkgs` does not exist, use `inputs.packages`
+          packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
+          repo-path: _site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

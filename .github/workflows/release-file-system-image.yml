@@ -1,0 +1,84 @@
+on:
+  # Allow users to run this workflow via reusable workflow
+  # Avoids boiler plate of setting the container and running the single steps
+  # Ex:
+  # jobs:
+  #   build:
+  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v1
+  workflow_call:
+    inputs:
+      packages:
+        description: |
+          A set of R package values. In addition to `packages` value, any R packages listed in `Config/Needs/wasm` in the `DESCRIPTION` file will automatically be added to the list.
+        default: "."
+        type: string
+        required: false
+      strip:
+        description: |
+          An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
+        default: "NULL"
+        type: string
+        required: false
+
+name: Build & Upload wasm R package image
+
+jobs:
+  release-file-system-image:
+    runs-on: ubuntu-latest
+
+    # Only run latest version of release asset
+    concurrency:
+      group: release
+      cancel-in-progress: true
+
+    permissions:
+      # For publishing artifact files to the release
+      contents: write
+      # To download GitHub Packages within action
+      repository-projects: read
+
+    steps:
+      - name: Validate event is release
+        if: github.event_name != 'release'
+        run: |
+          echo "This workflow should only be triggered release events"
+          exit 1
+
+      - name: Checkout calling repository
+        uses: actions/checkout@v4
+
+      - name: Checkout r-wasm/actions repository
+        uses: actions/checkout@v4
+        with:
+          ref: v1
+          repository: r-wasm/actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .actions
+
+      - name: Find `Config/Needs/wasm` in DESCRIPTION
+        id: needs
+        shell: Rscript {0}
+        run: |
+          has_wasm_need <-
+            file.exists("DESCRIPTION") &&
+            "Config/Needs/wasm" %in% names(as.list(read.dcf("DESCRIPTION")[1,]))
+          pkg <- if (has_wasm_need) as.list(read.dcf("DESCRIPTION")[1,])$`Config/Needs/wasm` else ""
+          pkg <- paste0(strsplit(pkg, "[[:space:],]+")[[1]], collapse = ",")
+          cat("pkg=", pkg, "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
+
+      - name: Build wasm image
+        uses: ./.actions/build-rwasm
+        with:
+          packages: |
+            ${{ inputs.packages }}
+            ${{ steps.needs.outputs.pkg }}
+          image-path: ._rwasm
+
+      - name: Upload wasm image to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "._rwasm/*"
+          tag: ${{ github.ref }}
+          file_glob: true
+          overwrite: true
