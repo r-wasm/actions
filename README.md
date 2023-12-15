@@ -20,15 +20,12 @@ jobs:
 
 * [r-wasm/actions/.github/workflows/release-file-system-image.yml](https://github.com/r-wasm/actions/tree/main/.github/workflows#release-file-system-image.yml) - Reusable workflow that builds a [WebAssembly file image](https://docs.r-wasm.org/webr/latest/mounting.html) and adds the files to a GitHub release. This is typically used within R packages to build and release a Wasm R package library image of your package and its dependencies. Because the assets are tied to a release, they will never be overwritten are are stable over time.
 
-For more documentation about these worfklows, please see the [reusable workflow readme](https://github.com/r-wasm/actions/tree/main/.github/workflows).
-
+For more documentation about these workflows, please see the [reusable workflow readme](https://github.com/r-wasm/actions/tree/main/.github/workflows).
 
 
 ## Actions
 
-* [`r-wasm/actions/build-file-system-image`](https://github.com/r-wasm/actions/tree/main/build-file-system-image) - Builds a R package into an WebAssembly file image. This is useful for [mounting a Wasm R package library](https://docs.r-wasm.org/webr/latest/mounting.html) directory in a container using only two files.
-
-* [`r-wasm/actions/build-cran-repo`](https://github.com/r-wasm/actions/tree/main/build-wasm-packages) - Build a set of R packages for WebAssembly in a CRAN-like repository containing the R package binaries.
+* [`r-wasm/actions/build-rwasm`](https://github.com/r-wasm/actions/tree/main/build-rwasm) - Builds a list of R packages for WebAssembly, creates a WebAssembly file image containing an R package library, and creates a CRAN-like repository containing the R package binaries.
 
 ## Examples
 
