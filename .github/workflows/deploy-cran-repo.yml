@@ -39,7 +39,16 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout calling repository
+        uses: actions/checkout@v4
+
+      - name: Checkout r-wasm/actions repository
+        uses: actions/checkout@v4
+        with:
+          ref: reusable_workflows3
+          repository: r-wasm/actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .actions
 
       - name: Retrieve packages from `./packages` file
         if: ${{ inputs.packages == '' }}
@@ -53,7 +62,7 @@ jobs:
           cat("pkgs=", paste0(pkgs, collapse = ","), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
 
       - name: Build wasm repo
-        uses: ./build-cran-repo
+        uses: ./.actions/build-rwasm
         with:
           # If `.pkgs` does not exist, use `inputs.packages`
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}

@@ -3,7 +3,7 @@ name: 'Build wasm packages action'
 description: 'Build wasm packages using r-wasm/rwasm'
 inputs:
   packages:
-    description: A set of R package values
+    description: A string of R package references.
     required: true
   strip:
     description: |
@@ -11,12 +11,12 @@ inputs:
     default: "NULL"
     required: false
   image-path:
-    description: Directory of where to save the R package library filesystem image
-    default: ""
+    description: Directory where the R package library filesystem image files should be saved.
+    default: "."
     required: false
   repo-path:
-    description: Directory of where to save the R package repository
-    default: ""
+    description: Directory where the R package repository should be saved.
+    default: "_site"
     required: false
 runs:
   using: 'docker'
