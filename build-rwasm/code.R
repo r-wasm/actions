@@ -25,6 +25,7 @@ packages <- args[3]
 strip <- args[4]
 
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
+strip <- strsplit(strip, "[[:space:],]+")[[1]]
 if (is.character(strip) && strip == "NULL") strip <- NULL
 
 cat("\nArgs:\n")

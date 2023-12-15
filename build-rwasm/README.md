@@ -10,7 +10,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 * **repo-path** (`_site`) - Directory where the CRAN-like repository should be saved.
   * Note: Due to limitations in GitHub Actions, the saved files can not be altered in any subsequent steps. Related: [actions/runner#434](https://github.com/actions/runner/issues/434).
 * **image-path** (`.`) - Directory where the R package library filesystem image should be saved.
-* **strip** (`NULL`) - An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
+* **strip** (`NULL`) - A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing. To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
 
 ## Steps
 

@@ -15,7 +15,7 @@ on:
         required: false
       strip:
         description: |
-          An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
+          A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing (the default). To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
         default: "NULL"
         type: string
         required: false
