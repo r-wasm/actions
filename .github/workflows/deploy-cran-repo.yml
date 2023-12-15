@@ -42,6 +42,16 @@ jobs:
       - name: Checkout calling repository
         uses: actions/checkout@v4
 
+      - name: Get workflow reference
+        id: workflows-ref
+        run: |
+          workflow_ref=${{ github.workflow_ref }}
+          repository="${{ github.repository }}/"
+          repo_ref="@${{ github.ref }}"
+          workflow_path=${workflow_ref#"$repository"}
+          workflow_path=${workflow_path%"$repo_ref"}
+          echo ${workflow_ref}, ${repository}, ${repo_ref}, ${workflow_path}
+
       - name: Checkout r-wasm/actions repository
         uses: actions/checkout@v4
         with:
