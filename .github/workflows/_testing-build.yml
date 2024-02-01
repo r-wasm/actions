@@ -1,0 +1,31 @@
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch: {}
+
+name: r-wasm/actions - build-rwasm
+
+jobs:
+  build-rwasm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./build-rwasm
+        with:
+          packages: cli
+          image-path: _image
+          repo-path: _repo
+      - name: Verify repo exists
+        shell: Rscript {0}
+        run: |
+          print(dir("_repo", recursive = TRUE))
+          stopifnot(dir.exists("_repo/src"))
+          stopifnot(dir.exists("_repo/bin"))
+      - name: Verify image exists
+        shell: Rscript {0}
+        run: |
+          print(dir("_image", recursive = TRUE))
+          stopifnot(file.exists("_image/library.data"))
+          stopifnot(file.exists("_image/library.js.metadata"))
