@@ -5,19 +5,17 @@ on:
     # Only build on main or master branch
     branches: [main, master]
   # Or when triggered manually
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 name: R WASM & {pkgdown} deploy
 
 jobs:
   rwasmbuild:
-    # Only restrict concurrency for non-PR jobs
     concurrency:
-      group: r-wasm-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: r-wasm-pkgdown-build
+      cancel-in-progress: true
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -47,9 +45,9 @@ jobs:
     # Required for the gh-pages deployment action
     environment:
       name: github-pages
-    # Only restrict concurrency for non-PR jobs
     concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: r-wasm-pkgdown-deploy
+      cancel-in-progress: true
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     permissions:
@@ -75,8 +73,13 @@ jobs:
       # Change the build directory from `docs` to `_site`
       # For parity with where the R WASM package repository is setup
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, dest_dir = "_site")
         shell: Rscript {0}
+        run: |
+          pkgdown::build_site_github_pages(
+            new_process = FALSE,
+            install = FALSE,
+            dest_dir = "_site"
+          )
         
       # New material ---
       
@@ -93,8 +96,6 @@ jobs:
       # This artifact shouldn't be required after deployment onto pages was a success.
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
-        with: 
-          retention-days: 1
       
       # Use an Action deploy to push the artifact onto GitHub Pages
       # This requires the `Action` tab being structured to allow for deployment
