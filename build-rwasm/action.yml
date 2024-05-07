@@ -7,7 +7,7 @@ inputs:
     required: true
   strip:
     description: |
-      A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothign (the default). To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
+      A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing (the default). To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
     default: "NULL"
     required: false
   image-path:
@@ -18,11 +18,18 @@ inputs:
     description: Directory where the R package repository should be saved.
     default: "_site"
     required: false
+  webr-image:
+    description: Docker container image for webR development environment.
+    default: "ghcr.io/r-wasm/webr:main"
+    type: string
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     # - Rscript
+    - --build-arg
+    - WEBR_IMAGE=${{ inputs.webr-image }}
     - /code.R
     - ${{ inputs.image-path }}
     - ${{ inputs.repo-path }}

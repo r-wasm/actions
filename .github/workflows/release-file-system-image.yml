@@ -19,6 +19,11 @@ on:
         default: "NULL"
         type: string
         required: false
+      webr-image:
+        description: Docker container image for webR development environment. Defaults to the latest version of webR.
+        default: "ghcr.io/r-wasm/webr:main"
+        type: string
+        required: false
 
 name: Build & Upload wasm R package image
 
@@ -74,6 +79,7 @@ jobs:
             ${{ steps.needs.outputs.pkg }}
           strip: ${{ inputs.strip }}
           image-path: ._rwasm
+          webr-image: ${{ inputs.webr-image }}
 
       - name: Upload wasm image to release
         uses: svenstaro/upload-release-action@v2
