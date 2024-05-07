@@ -11,7 +11,7 @@ jobs:
   build-rwasm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./build-rwasm
         with:
           packages: cli
@@ -32,7 +32,7 @@ jobs:
   build-rwasm-fixed-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./build-rwasm
         with:
           packages: cran/cli@3.6.2
