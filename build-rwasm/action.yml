@@ -24,14 +24,20 @@ inputs:
     type: string
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    # - Rscript
-    - --build-arg
-    - WEBR_IMAGE=${{ inputs.webr-image }}
-    - /code.R
-    - ${{ inputs.image-path }}
-    - ${{ inputs.repo-path }}
-    - ${{ inputs.packages }}
-    - ${{ inputs.strip }}
+#  using: 'docker'
+#  image: 'Dockerfile'
+#  args:
+#    - /code.R
+#    - ${{ inputs.image-path }}
+#    - ${{ inputs.repo-path }}
+#    - ${{ inputs.packages }}
+#    - ${{ inputs.strip }}
+# TODO: Remove this below workaround for https://github.com/orgs/community/discussions/25241
+  using: 'composite'
+  steps:
+    - run: docker build build-rwasm --build-arg WEBR_IMAGE=${{ inputs.webr-image }} -t r-wasm-build-rwasm:${GITHUB_SHA}
+      shell: bash
+    - run: |
+        docker run --rm -v $(pwd):/github/workspace --workdir /github/workspace r-wasm-build-rwasm:${GITHUB_SHA} \
+        /code.R "${{ inputs.image-path }}" "${{ inputs.repo-path }}" "${{ inputs.packages }}" "${{ inputs.strip }}"
+      shell: bash
