@@ -35,7 +35,7 @@ runs:
 # TODO: Remove this below workaround for https://github.com/orgs/community/discussions/25241
   using: 'composite'
   steps:
-    - run: docker build build-rwasm --build-arg WEBR_IMAGE=${{ inputs.webr-image }} -t r-wasm-build-rwasm:${GITHUB_SHA}
+    - run: docker build ${{github.action_path}} --build-arg WEBR_IMAGE=${{ inputs.webr-image }} -t r-wasm-build-rwasm:${GITHUB_SHA}
       shell: bash
     - run: |
         docker run --rm -v $(pwd):/github/workspace --workdir /github/workspace r-wasm-build-rwasm:${GITHUB_SHA} \
