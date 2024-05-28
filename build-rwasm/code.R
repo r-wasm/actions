@@ -31,7 +31,6 @@ if (is.character(strip) && length(strip) == 1 && strip == "NULL") strip <- NULL
 cat("\nArgs:\n")
 str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
 
-if (!require("pak", character.only = TRUE, quietly = TRUE)) install.packages("pak")
 if (!require("withr", character.only = TRUE, quietly = TRUE)) install.packages("withr")
 
 # Work in the GHA directory so that package reference 'local::.' works as expected
