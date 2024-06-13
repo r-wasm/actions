@@ -11,6 +11,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
   * Note: Due to limitations in GitHub Actions, the saved files can not be altered in any subsequent steps. Related: [actions/runner#434](https://github.com/actions/runner/issues/434).
 * **image-path** (`.`) - Directory where the R package library filesystem image should be saved.
 * **strip** (`NULL`) - A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing. To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
+* **webr-image** (`ghcr.io/r-wasm/webr:main`) - Docker container image for webR development environment. Switch `main` with a [tagged webR container version](https://github.com/r-wasm/webr/pkgs/container/webr) to use a stable release.
 
 ## Steps
 
