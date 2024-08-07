@@ -23,6 +23,11 @@ inputs:
     default: "ghcr.io/r-wasm/webr:main"
     type: string
     required: false
+  compress:
+    description: Compress Emscripten VFS images. Defaults to `false`.
+    default: false
+    type: boolean
+    required: false
 runs:
 #  using: 'docker'
 #  image: 'Dockerfile'
@@ -30,6 +35,7 @@ runs:
 #    - /code.R
 #    - ${{ inputs.image-path }}
 #    - ${{ inputs.repo-path }}
+#    - ${{ inputs.compress }}
 #    - ${{ inputs.packages }}
 #    - ${{ inputs.strip }}
 # TODO: Remove this below workaround for https://github.com/orgs/community/discussions/25241
@@ -39,5 +45,5 @@ runs:
       shell: bash
     - run: |
         docker run --rm -v $(pwd):/github/workspace --workdir /github/workspace r-wasm-build-rwasm:${GITHUB_SHA} \
-        /code.R "${{ inputs.image-path }}" "${{ inputs.repo-path }}" "${{ inputs.packages }}" "${{ inputs.strip }}"
+        /code.R "${{ inputs.image-path }}" "${{ inputs.repo-path }}" "${{ inputs.compress }}" "${{ inputs.packages }}" "${{ inputs.strip }}"
       shell: bash

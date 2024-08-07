@@ -44,3 +44,16 @@ jobs:
         run: |
           print(dir("_repo", recursive = TRUE))
           stopifnot(dir.exists("_repo/bin/emscripten/contrib/4.3/"))
+  build-rwasm-gzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./build-rwasm
+        with:
+          packages: cli
+          image-path: _image
+          repo-path: _repo
+          compress: true
+      - name: Verify repo built with compressed images exists
+        run: |
+          [ -n "$(find _repo -name '*.data.gz')" ]

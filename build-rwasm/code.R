@@ -8,6 +8,7 @@ if (length(args) == 0) {
 
 image_path <- args[1]
 repo_path <- args[2]
+compress <- args[3]
 
 if (!nzchar(image_path) && !nzchar(repo_path)) {
   stop("At least one of `image-path` or `repo-path` should be `true`.")
@@ -21,8 +22,8 @@ if (!nzchar(image_path) && !nzchar(repo_path)) {
 
 gha_dir <- file.path("/github/workspace")
 
-packages <- args[3]
-strip <- args[4]
+packages <- args[4]
+strip <- args[5]
 
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 strip <- strsplit(strip, "[[:space:],]+")[[1]]
@@ -45,7 +46,7 @@ withr::local_envvar(list(
 pak::pak(c("r-wasm/rwasm"))
 
 message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
-rwasm::add_pkg(packages, repo_dir = repo_path)
+rwasm::add_pkg(packages, repo_dir = repo_path, compress = compress)
 
 message("\n\nMaking library")
-rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip)
+rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip, compress = compress)
