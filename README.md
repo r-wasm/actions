@@ -7,12 +7,12 @@ This repository stores GitHub actions and [reusable workflows](https://docs.gith
 
 ## Releases and tags
 
-We use major version tags to mark breaking changes in these actions. For the current version, please use the `v1` tag, e.g.:
+We use major version tags to mark breaking changes in these actions. For the current version, please use the `v2` tag, e.g.:
 
 ```yaml
 jobs:
   deploy-cran-repo:
-    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
+    uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v2
 ```
 
 ## Reusable workflows

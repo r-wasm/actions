@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v2
   workflow_call:
     inputs:
       # !! ./build-cran-repo/action.yml inputs!!
@@ -17,6 +17,11 @@ on:
         description: Docker container image for webR development environment. Defaults to the latest version of webR.
         default: "ghcr.io/r-wasm/webr:main"
         type: string
+        required: false
+      compress:
+        description: Compress Emscripten VFS images. Defaults to `false`.
+        default: false
+        type: boolean
         required: false
 
 name: Build and deploy wasm R package repository
@@ -50,7 +55,7 @@ jobs:
       - name: Checkout r-wasm/actions repository
         uses: actions/checkout@v4
         with:
-          ref: v1
+          ref: v2
           repository: r-wasm/actions
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .actions
@@ -73,6 +78,7 @@ jobs:
           packages: ${{ steps.packages-file.outputs.pkgs || inputs.packages }}
           repo-path: _site
           webr-image: ${{ inputs.webr-image }}
+          compress: ${{ inputs.compress }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2

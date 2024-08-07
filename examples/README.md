@@ -19,6 +19,7 @@ Great for groups and organizations using a meta GitHub repo to create a centrali
 #### Inputs available
 
 * **packages** (`'packages'`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html). If an empty value is provided (default), the workflow will read `./packages` file for the R package references.
+* **compress** (`false`) - Compress Emscripten VFS images. Defaults to `false`. Loading compressed VFS images requires at least version 0.4.1 of webR.
 
 #### Usage
 
@@ -26,7 +27,7 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/deploy-cran-repo.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v2/examples/deploy-cran-repo.yml"
 )
 ```
 
@@ -46,6 +47,7 @@ This is typically used within R packages to build and release a WebAssembly R pa
 
 * **packages** (`'.'`) - A string of [R package references](https://r-lib.github.io/pkgdepends/reference/pkg_refs.html).
 * **strip** (`NULL`) - An R expression evaluating to [a character vector of directories](https://r-wasm.github.io/rwasm/reference/make_library.html#details) to remove when building the WebAssembly R package library image. To achieve a smaller bundle size, it is recommended to set `strip` to `c("demo", "doc", "examples", "help", "html", "include", "tests", "vignette")`.
+* **compress** (`false`) - Compress Emscripten VFS images. Defaults to `false`. Loading compressed VFS images requires at least version 0.4.1 of webR.
 
 
 #### Usage
@@ -54,6 +56,6 @@ To leverage this reusable workflow, run the following R command in the root of y
 
 ```R
 usethis::use_github_action(
-  url = "https://raw.githubusercontent.com/r-wasm/actions/v1/examples/release-file-system-image.yml"
+  url = "https://raw.githubusercontent.com/r-wasm/actions/v2/examples/release-file-system-image.yml"
 )
 ```

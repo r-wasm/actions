@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v1
+  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v2
   workflow_call:
     inputs:
       packages:
@@ -23,6 +23,11 @@ on:
         description: Docker container image for webR development environment. Defaults to the latest version of webR.
         default: "ghcr.io/r-wasm/webr:main"
         type: string
+        required: false
+      compress:
+        description: Compress Emscripten VFS images. Defaults to `false`.
+        default: false
+        type: boolean
         required: false
 
 name: Build & Upload wasm R package image
@@ -55,7 +60,7 @@ jobs:
       - name: Checkout r-wasm/actions repository
         uses: actions/checkout@v4
         with:
-          ref: v1
+          ref: v2
           repository: r-wasm/actions
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .actions
@@ -80,6 +85,7 @@ jobs:
           strip: ${{ inputs.strip }}
           image-path: ._rwasm
           webr-image: ${{ inputs.webr-image }}
+          compress: ${{ inputs.compress }}
 
       - name: Upload wasm image to release
         uses: svenstaro/upload-release-action@v2

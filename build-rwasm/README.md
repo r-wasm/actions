@@ -12,6 +12,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 * **image-path** (`.`) - Directory where the R package library filesystem image should be saved.
 * **strip** (`NULL`) - A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing. To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
 * **webr-image** (`ghcr.io/r-wasm/webr:main`) - Docker container image for webR development environment. Switch `main` with a [tagged webR container version](https://github.com/r-wasm/webr/pkgs/container/webr) to use a stable release.
+* **compress** (`false`) - Compress Emscripten VFS images. Defaults to `false`. Loading compressed VFS images requires at least version 0.4.1 of webR.
 
 ## Steps
 
@@ -43,7 +44,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build wasm packages
-      uses: r-wasm/actions/build-rwasm@v1
+      uses: r-wasm/actions/build-rwasm@v2
       with:
         packages: |
           cli
