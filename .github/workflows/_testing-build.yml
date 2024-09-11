@@ -44,7 +44,7 @@ jobs:
         run: |
           print(dir("_repo", recursive = TRUE))
           stopifnot(dir.exists("_repo/bin/emscripten/contrib/4.3/"))
-  build-rwasm-gzip:
+  build-rwasm-compressed:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -56,4 +56,4 @@ jobs:
           compress: true
       - name: Verify repo built with compressed images exists
         run: |
-          [ -n "$(find _repo -name '*.data.gz')" ]
+          [ -n "$(find _repo -name '*.tgz')" ]

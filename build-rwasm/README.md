@@ -48,9 +48,8 @@ jobs:
       with:
         packages: |
           cli
-  
-    # Use `library.data` and `library.js.metadata` files or repository files
-    # in `./_site` directory to create a GitHub Pages site.
+
+    # Use repository files in `./_site` directory to create a GitHub Pages site.
 ```
 
 To add the library image files to any GitHub release as assets files, use the [`release-file-system-image`](../examples/release-file-system-image.yml) workflow example.
