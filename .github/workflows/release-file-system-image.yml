@@ -34,7 +34,7 @@ name: Build & Upload wasm R package image
 
 jobs:
   release-file-system-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Only run latest version of release asset
     concurrency:

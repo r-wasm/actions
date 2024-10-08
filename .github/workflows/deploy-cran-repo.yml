@@ -29,7 +29,7 @@ name: Build and deploy wasm R package repository
 jobs:
   # Build and upload the wasm packages
   deploy-cran-repo:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Only run latest version of website
     concurrency:

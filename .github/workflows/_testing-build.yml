@@ -9,7 +9,7 @@ name: r-wasm/actions - build-rwasm
 
 jobs:
   build-rwasm:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: ./build-rwasm
@@ -30,7 +30,7 @@ jobs:
           stopifnot(file.exists("_image/library.data"))
           stopifnot(file.exists("_image/library.js.metadata"))
   build-rwasm-fixed-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: ./build-rwasm
@@ -45,7 +45,7 @@ jobs:
           print(dir("_repo", recursive = TRUE))
           stopifnot(dir.exists("_repo/bin/emscripten/contrib/4.3/"))
   build-rwasm-compressed:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: ./build-rwasm
