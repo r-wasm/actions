@@ -34,7 +34,7 @@ name: Build & Upload wasm R package image
 
 jobs:
   release-file-system-image:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # Only run latest version of release asset
     concurrency:
@@ -53,6 +53,8 @@ jobs:
         run: |
           echo "This workflow should only be triggered release events"
           exit 1
+
+      - uses: r-lib/actions/setup-r@v2
 
       - name: Checkout calling repository
         uses: actions/checkout@v4
